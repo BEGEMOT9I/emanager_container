@@ -2,8 +2,7 @@ Event Manager
 
 Порядок установки и найстройки:
 
-1) Создаем базу данных
-  - `psql CREATE DATABASE emanager;`
+1) Создаем базу данных, для этого прописываем в командной строке `createdb emanager;` или заходим в Postgres и создаем базу `CREATE DATABASE emanager;`
 
 2) Копируем `./emanager_container/settings.py.example` в ту же папку без расширения `.exapmle`. Меняем в нем, в настройках БД, логин и пароль на свой
 
