@@ -2,4 +2,6 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+	print 'Index template'
+	print('Index template')
+	return HttpResponse("Hello, world. You're at the polls index.")
