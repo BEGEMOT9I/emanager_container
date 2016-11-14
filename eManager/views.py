@@ -6,8 +6,6 @@ from django.views import generic
 
 from .models import Event
 
-<<<<<<< HEAD
-
 def MainView(request):
 	event_list = Event.objects.order_by('-start_date')
 	context = {'event_list': event_list}
@@ -20,9 +18,8 @@ def DetailView(request, event_id):
 		raise Http404("Event doesn`t exist")
 	context = {'event': event}
 	return render(request, 'eManager/detail.html', context)
-=======
+
 def index(request):
-	print 'Index template'
+	#print 'Index template'
 	print('Index template')
 	return HttpResponse("Hello, world. You're at the polls index.")
->>>>>>> ec027ae38fe1610bdc269399402a66bd31662e06
