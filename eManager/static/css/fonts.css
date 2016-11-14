@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Circe';
+  src: font-url('Circe.eot');
+  src: font-url('Circe.eot?#iefix') format("embedded-opentype"),
+  font-url('Circe.woff') format('woff'),
+  font-url('Circe.ttf') format('truetype');
+}

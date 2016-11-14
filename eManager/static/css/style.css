@@ -3,6 +3,134 @@ html, body {
 	padding: 0;
 }
 
-li a {
-	color: green;
+body {
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.container {
+	position: relative;
+	width: 100%;
+	min-height: 100%;
+	height: auto;
+	padding: 0 20px;
+	background: #eee;
+	box-sizing: border-box;
+}
+
+.wrapper {
+	position: relative;
+	width: 100%;
+	min-height: 100%;
+	height: auto;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.events {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.events .event {
+	position: relative;
+	width: 100%;
+	min-height: 120px;
+	height: auto;
+	color: #44f;
+}
+
+.events .event:first-child {
+	margin: 20px 0;
+}
+
+.events .event + .event {
+	margin-bottom: 20px;
+}
+
+.events .event .event__image {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #fff center center no-repeat;
+    background-size: cover;
+}
+
+.events .event .event__skin {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	opacity: 0.8;
+}
+
+.events .event .event__container {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.events .event .event__name, .events .event .event__name:visited, .events .event .event__name:focus {
+	position: relative;
+	display: inline-block;
+	font-family: Circe;
+	font-size: 24px;
+	line-height: 26px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.events .event .event__line {
+	width: 100%;
+	height: 2px;
+	margin-top: 5px;
+	background: #44f;
+}
+
+.events .event .event__address {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: 10px;
+}
+
+.events .event .event__address .address__icon {
+	width: 24px;
+	height: 30px;
+	fill: #44f;
+}
+
+.events .event .event__address .address__name {
+	margin: 5px 0 0 10px;
+	font-family: Circe;
+	font-size: 20px;
+	line-height: 22px;
+}
+
+.events .event .event__time {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: 10px;
+}
+
+.events .event .event__time .time__icon {
+	width: 24px;
+	height: 24px;
+	fill: #44f;
+}
+
+.events .event .event__time .time__name {
+	margin: 5px 0 0 10px;
+	font-family: Circe;
+	font-size: 20px;
+	line-height: 22px;
 }
