@@ -8,7 +8,6 @@
         <li>
         	{% if event.image %}
             	<img src="{{ event.image.url }}">
-            	            {{event.image.url}}
             {% endif %}
         	<a>{{ event.city }}</a>
         	<a href="{% url 'emanager:detail' event.id %}">{{ event.name }}</a>
