@@ -6,20 +6,17 @@ from django.views import generic
 
 from .models import Event
 
-def MainView(request):
-	event_list = Event.objects.order_by('-start_date')
-	context = {'event_list': event_list}
-	return render(request, 'eManager/index.html', context)
+class MainView(generic.ListView):
+	template_name = 'eManager/index.html'
+	context_object_name = 'event_list'
 
-def DetailView(request, event_id):
-	try:
-		event = Event.objects.get(pk=event_id)
-	except Event.DoesNotExist:
-		raise Http404("Event doesn`t exist")
-	context = {'event': event}
-	return render(request, 'eManager/detail.html', context)
+	def get_queryset(self):
+		return Event.objects.order_by('start_date')
+
+class DetailView(generic.DetailView):
+	model = Event
+	template_name = 'eManager/detail.html'
 
 def index(request):
-	#print 'Index template'
 	print('Index template')
 	return HttpResponse("Hello, world. You're at the polls index.")

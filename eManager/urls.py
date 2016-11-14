@@ -6,5 +6,5 @@ from . import views
 app_name = 'emanager'
 
 urlpatterns = [
-    url(r'^(?P<event_id>[0-9]+)/$', views.DetailView, name='detail'),
+    url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
 ]

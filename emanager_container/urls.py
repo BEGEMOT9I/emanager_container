@@ -21,5 +21,5 @@ from eManager import views
 urlpatterns = [
 	url(r'^emanager/', include('eManager.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.MainView, name='main')
+    url(r'^$', views.MainView.as_view(), name='main')
 ]
