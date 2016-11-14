@@ -16,9 +16,9 @@ _PATH = os.path.abspath(os.path.dirname(__file__))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Path to media
-STATIC_URL = '/static/'
+STATIC_URL = '/eManager/static/'
 MEDIA_URL = '/eManager/upload/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "eManager/static")
 MEDIA_ROOT = os.path.join(BASE_DIR, "eManager/upload")
 
 
