@@ -16,7 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from eManager import views
+
 urlpatterns = [
 	url(r'^emanager/', include('eManager.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.MainView, name='main')
 ]

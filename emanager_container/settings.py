@@ -19,10 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-#MEDIA_ROOT = os.path.join(os.path.expanduser('~'), 'files', 'media')
-MEDIA_ROOT = os.path.join(_PATH, 'files', 'media')
-
-MEDIA_URL = '/media/'
+MEDIA_URL = 'emanager_container/files/media/'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '2e5fs$q0=3ptml**vbrn*7=1o_s#sh#jq24zuqaumg)ti9u(hz'
 

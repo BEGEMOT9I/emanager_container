@@ -1,0 +1,25 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'eManager/style.css' %}" />
+
+{% if event_list %}
+    <ul>
+    {% for event in event_list %}
+        <li>
+        	{% if event.image %}
+            	<img src="{{ event.image.url }}">
+            	            {{event.image.url}}
+
+            {% endif %}
+        	<a>{{ event.city }}</a>
+        	<a href="{% url 'emanager:detail' event.id %}">{{ event.name }}</a>
+        	<a>{{ event.organizer }}</a>
+        	<a>{{ event.description }}</a>
+        	<a>{{ event.start_date }}</a>
+        	<a>{{ event.addres }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+	{% else %}
+    	<p>No events are available.</p>
+{% endif %}
