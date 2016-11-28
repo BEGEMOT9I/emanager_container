@@ -6,6 +6,13 @@
 <div class="container">
     <div class="wrapper">
     {% if event_list %}
+        <div class="finder">
+            <span class="finder__title">Поиск:</span>
+            <div class="finder__field">
+                <input class="text" type="text" name="find" disabled oninput="FindEvents(this)" onfocusout="DeactivateField(this)">
+                <div class="skin" onclick="ActivateField(this)"></div>
+            </div>
+        </div>
         <ul class="events">
         {% for event in event_list %}
             <li class="event">
@@ -51,7 +58,10 @@
         {% endfor %}
         </ul>
     {% else %}
-        <p>No events are available.</p>
+        <p class="noevents">Событий нет.</p>
     {% endif %}
     </div>
 </div>
+
+<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
