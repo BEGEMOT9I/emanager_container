@@ -27,3 +27,11 @@ function FindEvents(element) {
 		}
 	});
 }
+
+window.addEventListener('load', function() {
+	var controller = $('.container').data('controller');
+
+	if (controller) {
+		window[controller].call();
+	}
+});

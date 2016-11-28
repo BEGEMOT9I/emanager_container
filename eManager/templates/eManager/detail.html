@@ -1,7 +1,24 @@
-<h3>О событии:<h3>
-<h1>"{{event.name}}"<h1>
-<h4>в городе: {{event.city}}<h4>
-<h4>организатор: {{event.organizer}}<h4>
-<h4>описание: {{event.description}}<h4>
-<h4>начало: {{event.start_date}}<h4>
-<h4>место: {{event.addres}}<h4>
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
+
+<div class="container details" data-controller="DetailsController">
+	<div class="event__image" style="background-image: url({{ event.image.url }})"></div>
+    <div class="wrapper">
+		<h1 class="event__name">{{event.name}}</h1>
+		<span class="event__location">Место проведения: {{event.address}}</span>
+		<div id="event__map" data-position="{{event.address}}"></div>
+		<span class="event__line"></span>
+		<span class="event__organizer">Организатор: {{event.organizer}}</span>
+		<span class="event__line"></span>
+		<span class="event__description">Описание: {{event.description}}</span>
+		<span class="event__line"></span>
+		<span class="event__date">Начало: {{event.start_date}}</span>
+	</div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="//maps.google.com/maps/api/js?v=3&key=AIzaSyBvL5WzpfNmncgr8KD4QHACfRNJOkerpX8&libraries=geometry&language=&hl=&region="></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/controllers/details_controller.js' %}"></script>
