@@ -1,0 +1,14 @@
+<form action="" method="post">
+	{% csrf_token %}
+	{{ form.login.errors }}
+    <label for="{{ form.login.id_login }}">Логин: </label>
+    {{ form.login }}
+    <br>
+	{{ form.password.errors }}
+    <label for="{{ form.password.id_password }}">Пароль: </label>
+    {{ form.password }}
+	<button type="submit">Зарегистрироваться</button>
+</form>
+{% if form.error %}
+	<span>{{form.error}}</span>
+{% endif %}

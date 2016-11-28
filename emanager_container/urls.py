@@ -21,7 +21,6 @@ from django.conf import settings
 from eManager import views
 
 urlpatterns = [
-	url(r'^emanager/', include('eManager.urls')),
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.MainView.as_view(), name='main')
+	url('', include('eManager.urls')),
+    url(r'^admin/', admin.site.urls)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -23,3 +23,16 @@ class Event(models.Model):
 
 	def __str__(self):
 		return self.name
+
+@python_2_unicode_compatible
+class User(models.Model):
+
+	login = models.CharField(max_length=50, verbose_name='логин', default='')
+	password = models.CharField(max_length=20, verbose_name='пароль', default='')
+
+	class Meta:
+		verbose_name = 'пользователь'
+		verbose_name_plural = 'пользователи'
+
+	def __str__(self):
+		return self.login
