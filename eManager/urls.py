@@ -8,6 +8,6 @@ app_name = 'emanager'
 urlpatterns = [
 	url(r'^$', views.EventsListView.as_view(), name='index'),
     url(r'^events/(?P<pk>[0-9]+)/$', views.EventDetailsView.as_view(), name='detail'),
-    url(r'^register/$', views.RegisterView.as_view(), name='register'),
+    url(r'^registration/$', views.RegistrationView.as_view(), name='registration'),
     url(r'^login/$', views.LoginView.as_view(), name='login')
 ]

@@ -265,3 +265,160 @@ body {
 	margin: 20px 0;
 	background: #44f;
 }
+
+/* --- Registration page ---*/
+
+.registration .wrapper {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	flex: auto;
+}
+
+.registration .title {
+	display: inline-block;
+	width: 100%;
+	margin: 20px 0;
+	font-family: Circe;
+	font-size: 44px;
+	line-height: 50px;
+	color: #44f;
+}
+
+.registration .form {
+	display: flex;
+	flex-flow: column nowrap;
+	flex-grow: 0;
+	flex-shrink: 1;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.registration label {
+	display: inline-block;
+	width: 100%;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+}
+
+.registration input[type="text"] {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 5px 10px 3px 10px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+	background: none;
+	border: none;
+	border-bottom: 2px solid #44f;
+	outline: none;
+	opacity: 1;
+	box-sizing: border-box;
+}
+
+.registration button[type="submit"] {
+	width: 240px;
+	margin-top: 10px;
+	padding: 5px 10px 3px 10px;
+	background: rgba(0, 0, 0, 0);
+	border: 2px solid #44f;
+	border-radius: 2px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+	cursor: pointer;
+	transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
+}
+
+.registration button[type="submit"]:hover {
+	background: #44f;
+	border: 2px solid rgba(0, 0, 0, 0);
+	color: #fff;
+}
+
+/* --- Login page ---*/
+
+.login .wrapper {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	flex: auto;
+}
+
+.login .title {
+	display: inline-block;
+	width: 100%;
+	margin: 20px 0;
+	font-family: Circe;
+	font-size: 44px;
+	line-height: 50px;
+	color: #44f;
+}
+
+.login .form {
+	display: flex;
+	flex-flow: column nowrap;
+	flex-grow: 0;
+	flex-shrink: 1;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.login label {
+	display: inline-block;
+	width: 100%;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+}
+
+.login input[type="text"], .login input[type="password"]{
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 5px 10px 3px 10px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+	background: none;
+	border: none;
+	border-bottom: 2px solid #44f;
+	outline: none;
+	opacity: 1;
+	box-sizing: border-box;
+}
+
+.login button[type="submit"] {
+	width: 240px;
+	margin-top: 10px;
+	padding: 5px 10px 3px 10px;
+	background: rgba(0, 0, 0, 0);
+	border: 2px solid #44f;
+	border-radius: 2px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+	cursor: pointer;
+	transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
+}
+
+.login button[type="submit"]:hover {
+	background: #44f;
+	border: 2px solid rgba(0, 0, 0, 0);
+	color: #fff;
+}
+
+.exit {
+	display: none;
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}

@@ -1,5 +1,23 @@
-<form action="" method="post">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<button type="submit">Войти</button>
-</form>
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
+
+<div class="container login" data-controller="">
+    <div class="wrapper">
+    	<span class="title">Авторизация</span>
+		<form class="form" action="" method="post">
+			{% csrf_token %}
+			{{ form.login.errors }}
+		    <label for="{{ form.login.id_login }}">Логин: </label>
+		    {{ form.login }}
+			{{ form.password.errors }}
+		    <label for="{{ form.password.id_password }}">Пароль: </label>
+		    {{ form.password }}
+			<button type="submit">Войти</button>
+		</form>
+		{% if form.error %}
+			<div>{{ form.error }}</div>
+		{% endif %}
+	</div>
+</div>
