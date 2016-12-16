@@ -1,5 +1,2 @@
 emanager_container/settings.py
-!eManager/migrations/__init__.py
-!eManager/migrations/__pycache__
-eManager/migrations/*
 eManager/upload/*

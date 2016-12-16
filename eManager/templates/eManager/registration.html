@@ -8,16 +8,25 @@
     	<span class="title">Регистрация</span>
 		<form class="form" action="" method="post">
 			{% csrf_token %}
-			{{ form.login.errors }}
-		    <label for="{{ form.login.id_login }}">Логин: </label>
-		    {{ form.login }}
-			{{ form.password.errors }}
-		    <label for="{{ form.password.id_password }}">Пароль: </label>
-		    {{ form.password }}
+		    <label for="{{ form.username.id_username }}">Логин: </label>
+		    {{ form.username }}
+		    {{ form.username.errors }}
+		    <label for="{{ form.email.id_email }}">Почта: </label>
+		    {{ form.email }}
+		    {{ form.email.errors }}
+		    <label for="{{ form.password1.id_password1 }}">Пароль: </label>
+		    {{ form.password1 }}
+		    {{ form.password1.errors }}
+		    <label for="{{ form.password2.id_password2 }}">Пароль: </label>
+		    {{ form.password2 }}
+		    {{ form.password2.errors }}
 			<button type="submit">Зарегистрироваться</button>
 		</form>
-		{% if form.error %}
-			<span>{{form.error}}</span>
-		{% endif %}
+		<!-- <form class="form" action="" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			{{ field.errors }}
+			<button type="submit">Зарегистрироваться</button>
+		</form> -->
 	</div>
 </div>

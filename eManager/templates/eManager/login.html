@@ -8,16 +8,9 @@
     	<span class="title">Авторизация</span>
 		<form class="form" action="" method="post">
 			{% csrf_token %}
-			{{ form.login.errors }}
-		    <label for="{{ form.login.id_login }}">Логин: </label>
-		    {{ form.login }}
-			{{ form.password.errors }}
-		    <label for="{{ form.password.id_password }}">Пароль: </label>
-		    {{ form.password }}
+			{{ form.as_p }}
+			{{ field.errors }}
 			<button type="submit">Войти</button>
 		</form>
-		{% if form.error %}
-			<div>{{ form.error }}</div>
-		{% endif %}
 	</div>
 </div>

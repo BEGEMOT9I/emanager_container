@@ -3,11 +3,19 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
 
+<header class="header">
+    {% if is_logined %}
+        <div class="exit">
+            <a href="{% url 'emanager:logout' %}">Выйти</a>
+        </div>
+    {% else %}
+        <div class="enter">
+            <a href="{% url 'emanager:login' %}">Войти</a>
+        </div>
+    {% endif %}
+</header>
 <div class="container list" data-controller="">
     <div class="wrapper">
-    <!-- {% if is_logined %} -->
-    <!-- {% endif %} -->
-    <div class="exit">{{ is_logined }}</div>
     {% if event_list %}
         <div class="finder">
             <span class="finder__title">Поиск:</span>
