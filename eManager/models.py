@@ -9,7 +9,6 @@ from django.contrib.auth.models import (
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import timezone
 
-# Create your models here.
 @python_2_unicode_compatible
 class Event(models.Model):
 	
@@ -99,3 +98,26 @@ class MyUser(AbstractBaseUser):
 	class Meta:
 		verbose_name = 'пользователь'
 		verbose_name_plural = 'пользователи'
+
+class CommentManager(models.Manager):
+	def create_comment(self, event, user, text):
+		comment = self.create(
+			event=event,
+			user=user,
+			text=text,
+			created_date=timezone.now()
+		)
+
+		return comment
+
+@python_2_unicode_compatible
+class Comment(models.Model):
+	event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='события')
+	user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name='пользователи')
+	text = models.TextField()
+	created_date = models.DateTimeField(auto_now=True)
+
+	objects = CommentManager()
+
+	def __str__(self):
+		return self.text

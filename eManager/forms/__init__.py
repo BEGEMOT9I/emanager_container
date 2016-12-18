@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from eManager.models import MyUser
+from eManager.models import MyUser, Comment
 
 class UserCreationForm(forms.ModelForm):
 	password1 = forms.CharField(label='Password', widget=forms.PasswordInput)

@@ -1,30 +1,50 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.views import generic
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
 # Auth form and helper for working with user session
 from django.contrib.auth import login, logout, authenticate
-from .models import Event, MyUser
+from .models import Event, MyUser, Comment
 from .forms import UserCreationForm as RegistrationForm
 
 class EventsListView(generic.ListView):
 	template_name = 'eManager/index.html'
 	context_object_name = 'event_list'
 
-	def get_context_data(self, **kwargs):
-		context = super(EventsListView, self).get_context_data(**kwargs)
-		context['is_logined'] = self.request.user.is_authenticated()
-		return context
-
 	def get_queryset(self):
 		return Event.objects.order_by('start_date')
+
+def AddComment(request, pk):
+	if request.method == 'POST':
+		event = Event.objects.filter(pk=pk).first()
+		user = request.user
+		text = request.POST['text']
+		instance = Comment.objects.create_comment(event, user, text)
+		return redirect('emanager:detail', pk=event.id)
+		
+	return HttpResponseRedirect('/')
+
+def DeleteComment(request, pk):
+	comment = Comment.objects.filter(pk=pk).first()
+	event_id = comment.event_id
+	comment.delete()
+	return redirect('emanager:detail', pk=event_id)
 
 class EventDetailsView(generic.DetailView):
 	model = Event
 	template_name = 'eManager/detail.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(EventDetailsView, self).get_context_data(**kwargs)
+		context['event'].comments = Comment.objects.filter(event_id=context['event'].id)
+		for comment in context['event'].comments:
+			comment.username = MyUser.objects.filter(id=comment.user_id).first()
+
+		return context
 
 class RegistrationView(generic.edit.CreateView):
 	model = MyUser

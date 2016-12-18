@@ -3,9 +3,20 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
 
+<header class="header">
+	{% if user.is_authenticated %}
+		<div class="exit">
+			<a href="{% url 'emanager:logout' %}">Выйти</a>
+		</div>
+	{% else %}
+		<div class="enter">
+			<a href="{% url 'emanager:login' %}">Войти</a>
+		</div>
+	{% endif %}
+</header>
 <div class="container details" data-controller="DetailsController">
 	<div class="event__image" style="background-image: url({{ event.image.url }})"></div>
-    <div class="wrapper">
+	<div class="wrapper">
 		<h1 class="event__name">{{event.name}}</h1>
 		<span class="event__location">Место проведения: {{event.address}}</span>
 		<div id="event__map" data-position="{{event.address}}"></div>
@@ -15,6 +26,42 @@
 		<span class="event__description">Описание: {{event.description}}</span>
 		<span class="event__line"></span>
 		<span class="event__date">Начало: {{event.start_date}}</span>
+		<div class="event__comments">
+			<span class="comments__title">Комментарии:</span>
+
+			{% for comment in event.comments.all %}
+				<div class="comment">
+					<span class="comment__line"></span>
+					<span class="comment__user">
+						<b>{{ comment.user.username }}</b>
+					</span>
+					<span class="comment__date">{{ comment.created_date }}</span>
+					<div class="comment__row">
+						<span class="comment__text">{{ comment.text }}</span>
+
+						{% if user.is_authenticated and user.username == comment.user.username %}
+							<div class="comment__buttons">
+								<div class="button_delete">
+									<a href="{% url 'emanager:DeleteComment' comment.id %}">
+										<span></span>
+										<span></span>
+									</a>
+								</div>
+							</div>
+						{% endif %}
+
+					</div>
+				</div>
+			{% empty %}
+				<p>Нет комментариев</p>
+			{% endfor %}
+			
+			<form class="comment-add" action="{% url 'emanager:AddComment' event.id %}" method="post">
+				{% csrf_token %}
+				<textarea class="comment-add__text" type="textarea" name="text" id="text" value="" placeholder="Оставить комментарий"></textarea>
+				<input class="comment-add__button" type="submit" value="Отправить" />
+			</form>
+		</div>
 	</div>
 </div>
 
