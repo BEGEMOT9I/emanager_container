@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.views import generic
 from django import forms
@@ -33,6 +33,24 @@ def DeleteComment(request, pk):
 	event_id = comment.event_id
 	comment.delete()
 	return redirect('emanager:detail', pk=event_id)
+
+def ChangeComment(request, pk):
+	if request.method == 'POST':
+		text = request.POST['new_text']
+		errors = []
+
+		if not text:
+			errors.append('Пустой текст')
+
+		comments = Comment.objects.filter(pk=pk)
+
+		if not comments:
+			errors.append('Нет коммента')
+
+		if not len(errors):
+			comments.update(text=text)
+
+		return JsonResponse({'errors': errors})
 
 class EventDetailsView(generic.DetailView):
 	model = Event

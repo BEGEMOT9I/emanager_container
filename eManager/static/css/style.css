@@ -363,19 +363,58 @@ body {
 	box-sizing: border-box;
 }
 
-.comment .comment__text {
-	padding-right: 20px;
+.comment .comment-change {
+	position: relative;
+	display: flex;
+	flex-flow: row wrap;
+	flex-grow: 1;
+	flex-shrink: 1;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.comment .comment-change .comment-change__errors {
+	display: none;
+	width: 100%;
+	color: #f00;
+}
+
+.comment .comment-change .comment-change__errors.active {
+	display: inline-block;
+}
+
+.comment-change .comment__text {
+	flex-grow: 1;
+	margin: 10px 20px 10px 0;
+	padding: 10px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	background: none;
+	border: none;
+	color: #44f;
+	resize: none;
+	outline: none;
+}
+
+.comment-change .comment__text.active {
+	background: #fff;
+	outline: 10px solid #fff;
 }
 
 .comment .comment__buttons {
 	position: relative;
 	display: flex;
 	flex-flow: row nowrap;
+	height: 40px;
 	border: 2px solid #44f;
 	border-radius: 5px;
 }
 
-.comment__buttons .button_delete, .comment__buttons .button_delete a {
+.comment__buttons .button_delete,
+.comment__buttons .button_delete a,
+.comment__buttons .button_update {
 	position: relative;
 	display: inline-block;
 	width: 40px;
@@ -397,6 +436,18 @@ body {
 
 .comment__buttons .button_delete span:last-child {
 	transform: rotate(-45deg);
+}
+
+.comment__buttons .button_update svg {
+	position: relative;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	padding: 5px;
+}
+
+.comment__buttons .button_update svg path {
+	fill: #44f;
 }
 
 .comment-add {

@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
     url(r'^add_comment/(?P<pk>[0-9]+)/$', views.AddComment, name='AddComment'),
     url(r'^delete_comment/(?P<pk>[0-9]+)/$', views.DeleteComment, name='DeleteComment'),
+    url(r'^change_comment/(?P<pk>[0-9]+)/$', views.ChangeComment, name='ChangeComment'),
 ]
