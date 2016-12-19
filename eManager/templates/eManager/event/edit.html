@@ -1,0 +1,61 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
+
+<header class="header">
+	{% if user.is_authenticated %}
+		<div class="exit">
+			<a href="{% url 'emanager:logout' %}">Выйти</a>
+		</div>
+	{% else %}
+		<div class="enter">
+			<a href="{% url 'emanager:login' %}">Войти</a>
+		</div>
+	{% endif %}
+</header>
+<div class="container event-edit" data-controller="">
+	<div class="wrapper">
+		<form action="{% url 'emanager:event_edit' event.id %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="event-edit__row">
+				<label for="id_organizer">Организатор: </label>
+				{{ form.organizer }}
+				{{ form.organizer.errors }}
+			</div>
+			<div class="event-edit__row">
+				<label for="id_name">Название: </label>
+				{{ form.name }}
+				{{ form.name.errors }}
+			</div>
+			<div class="event-edit__row">
+				<label for="id_start_date">Дата начала: </label>
+				{{ form.start_date }}
+				{{ form.start_date.errors }}
+			</div>
+			<div class="event-edit__row">
+				<label for="id_description">Описание: </label>
+				{{ form.description }}
+				{{ form.description.errors }}
+			</div>
+			<div class="event-edit__row">
+				<label for="id_address">Место проведения: </label>
+				{{ form.address }}
+				{{ form.address.errors }}
+			</div>
+			<div class="event-edit__row event-edit__row_image">
+				<label class="row__label" for="id_image">Постер: </label>
+				<div class="row__subrow">
+					<label for="image-clear_id">Очистить</label>
+					<input id="image-clear_id" name="image-clear" type="checkbox">
+				</div>
+			    <input id="id_image" name="image" type="file">
+			    {{ form.image.errors }}
+		    </div>
+			<input class="event-edit__button" type="submit" value="Отправить" />
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
