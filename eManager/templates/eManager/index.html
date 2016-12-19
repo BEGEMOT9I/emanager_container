@@ -32,13 +32,13 @@
                     <div class="event__skin"></div>
                 {% endif %}
                 <div class="event__container">
-                    <a class="event__name" href="{% url 'emanager:detail' event.id %}">{{ event.name }}</a>
+                    <a class="event__name" href="{% url 'emanager:event_detail' event.id %}">{{ event.name }}</a>
                     <span class="event__line"></span>
                     <div class="event__address">
                         <svg class="address__icon" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="6 0 41 52">
                             <path d="M38.853,5.324L38.853,5.324c-7.098-7.098-18.607-7.098-25.706,0h0 C6.751,11.72,6.031,23.763,11.459,31L26,52l14.541-21C45.969,23.763,45.249,11.72,38.853,5.324z M26.177,24c-3.314,0-6-2.686-6-6 s2.686-6,6-6s6,2.686,6,6S29.491,24,26.177,24z"/>
                         </svg>
-                        <span class="address__name">{{ event.addres }}</span>
+                        <span class="address__name">{{ event.address }}</span>
                     </div>
                     <div class="event__time">
                         <svg class="time__icon" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 60 60">

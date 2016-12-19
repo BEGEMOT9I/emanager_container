@@ -24,7 +24,7 @@ def AddComment(request, pk):
 		user = request.user
 		text = request.POST['text']
 		instance = Comment.objects.create_comment(event, user, text)
-		return redirect('emanager:detail_with_comment', pk=event.id, comment_id=instance.id)
+		return redirect('emanager:event_detail_with_comment', pk=event.id, comment_id=instance.id)
 		
 	return HttpResponseRedirect('/')
 
@@ -32,7 +32,7 @@ def DeleteComment(request, pk):
 	comment = Comment.objects.filter(pk=pk).first()
 	event_id = comment.event_id
 	comment.delete()
-	return redirect('emanager:detail', pk=event_id)
+	return redirect('emanager:event_detail', pk=event_id)
 
 def ChangeComment(request, pk):
 	if request.method == 'POST':
@@ -52,9 +52,17 @@ def ChangeComment(request, pk):
 
 		return JsonResponse({'errors': errors})
 
+class EventEditView(generic.edit.UpdateView):
+	model = Event
+	template_name = 'eManager/event/edit.html'
+	fields = ['organizer', 'name', 'start_date', 'description', 'address', 'image']
+
+	def get_success_url(self):
+		return '/'
+
 class EventDetailsView(generic.DetailView):
 	model = Event
-	template_name = 'eManager/detail.html'
+	template_name = 'eManager/event/detail.html'
 
 	def get_context_data(self, **kwargs):
 		context = super(EventDetailsView, self).get_context_data(**kwargs)
@@ -94,3 +102,14 @@ class LogoutView(generic.base.View):
 	def get(self, request):
 		logout(request)
 		return HttpResponseRedirect("/")
+
+# class ProfileView(generic.DetailView):
+# 	model = MyUser
+# 	template_name = 'eManager/profile.html'
+
+# 	def get_context_data(self, **kwargs):
+# 		context = super(ProfileView, self).get_context_data(**kwargs)
+# 		context['event'].comments = Comment.objects.filter(event_id=context['event'].id)
+
+# 		for comment in context['event'].comments:
+# 			comment.username = MyUser.objects.filter(id=comment.user_id).first()
