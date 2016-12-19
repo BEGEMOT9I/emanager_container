@@ -30,7 +30,7 @@
 			<span class="comments__title">Комментарии:</span>
 
 			{% for comment in event.comments.all %}
-				<div class="comment">
+				<div class="comment" data-id="{{ comment.id }}">
 					<span class="comment__line"></span>
 					<span class="comment__user">
 						<b>{{ comment.user.username }}</b>

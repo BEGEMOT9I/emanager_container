@@ -208,4 +208,13 @@ window.DetailsController = function() {
 			alert("Geocode was not successful for the following reason: " + status);
 		}
 	});
+
+	var commentID = window.location.pathname.match(/\/comment\/([0-9]+)/);
+
+	if (commentID && commentID.length == 2) {
+		commentID = commentID[1];
+		$('html, body').animate({
+			scrollTop: $('.comment[data-id="' + commentID + '"]').offset().top - 60
+		}, 1000);
+	}
 }

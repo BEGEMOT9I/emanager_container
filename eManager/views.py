@@ -24,7 +24,7 @@ def AddComment(request, pk):
 		user = request.user
 		text = request.POST['text']
 		instance = Comment.objects.create_comment(event, user, text)
-		return redirect('emanager:detail', pk=event.id)
+		return redirect('emanager:detail_with_comment', pk=event.id, comment_id=instance.id)
 		
 	return HttpResponseRedirect('/')
 
