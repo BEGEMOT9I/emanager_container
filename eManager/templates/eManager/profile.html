@@ -1,0 +1,107 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
+
+<header class="header">
+	{% if user.is_authenticated %}
+		<div class="exit">
+			<a href="{% url 'emanager:logout' %}">Выйти</a>
+		</div>
+	{% else %}
+		<div class="enter">
+			<a href="{% url 'emanager:login' %}">Войти</a>
+		</div>
+	{% endif %}
+</header>
+<div class="container user-page" data-controller="">
+	<div class="wrapper">
+    {% if user.events %}
+    	<span class="user-page__title events__title">События:</span>
+        <ul class="events">
+        {% for event in user.events %}
+            <li class="event">
+                {% if event.image %}
+                    <div class="event__image" style="background-image: url({{ event.image.url }})"></div>
+                    <div class="event__skin"></div>
+                {% endif %}
+                <div class="event__container">
+                    <a class="event__name" href="{% url 'emanager:event_detail' event.id %}">{{ event.name }}</a>
+                    <span class="event__line"></span>
+                    <div class="event__address">
+                        <svg class="address__icon" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="6 0 41 52">
+                            <path d="M38.853,5.324L38.853,5.324c-7.098-7.098-18.607-7.098-25.706,0h0 C6.751,11.72,6.031,23.763,11.459,31L26,52l14.541-21C45.969,23.763,45.249,11.72,38.853,5.324z M26.177,24c-3.314,0-6-2.686-6-6 s2.686-6,6-6s6,2.686,6,6S29.491,24,26.177,24z"/>
+                        </svg>
+                        <span class="address__name">{{ event.address }}</span>
+                    </div>
+                    <div class="event__time">
+                        <svg class="time__icon" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 60 60">
+                            <g>
+                                <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30
+                                    S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"/>
+                                <path d="M31,26.021V15.879c0-0.553-0.448-1-1-1s-1,0.447-1,1v10.142c-1.399,0.364-2.494,1.459-2.858,2.858H19c-0.552,0-1,0.447-1,1
+                                    s0.448,1,1,1h7.142c0.447,1.72,2,3,3.858,3c2.206,0,4-1.794,4-4C34,28.02,32.72,26.468,31,26.021z M30,31.879c-1.103,0-2-0.897-2-2
+                                    s0.897-2,2-2s2,0.897,2,2S31.103,31.879,30,31.879z"/>
+                                <path d="M30,9.879c0.552,0,1-0.447,1-1v-1c0-0.553-0.448-1-1-1s-1,0.447-1,1v1C29,9.432,29.448,9.879,30,9.879z"/>
+                                <path d="M30,49.879c-0.552,0-1,0.447-1,1v1c0,0.553,0.448,1,1,1s1-0.447,1-1v-1C31,50.326,30.552,49.879,30,49.879z"/>
+                                <path d="M52,28.879h-1c-0.552,0-1,0.447-1,1s0.448,1,1,1h1c0.552,0,1-0.447,1-1S52.552,28.879,52,28.879z"/>
+                                <path d="M9,28.879H8c-0.552,0-1,0.447-1,1s0.448,1,1,1h1c0.552,0,1-0.447,1-1S9.552,28.879,9,28.879z"/>
+                                <path d="M44.849,13.615l-0.707,0.707c-0.391,0.391-0.391,1.023,0,1.414c0.195,0.195,0.451,0.293,0.707,0.293
+                                    s0.512-0.098,0.707-0.293l0.707-0.707c0.391-0.391,0.391-1.023,0-1.414S45.24,13.225,44.849,13.615z"/>
+                                <path d="M14.444,44.021l-0.707,0.707c-0.391,0.391-0.391,1.023,0,1.414c0.195,0.195,0.451,0.293,0.707,0.293
+                                    s0.512-0.098,0.707-0.293l0.707-0.707c0.391-0.391,0.391-1.023,0-1.414S14.834,43.631,14.444,44.021z"/>
+                                <path d="M45.556,44.021c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l0.707,0.707c0.195,0.195,0.451,0.293,0.707,0.293
+                                    s0.512-0.098,0.707-0.293c0.391-0.391,0.391-1.023,0-1.414L45.556,44.021z"/>
+                                <path d="M15.151,13.615c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l0.707,0.707c0.195,0.195,0.451,0.293,0.707,0.293
+                                    s0.512-0.098,0.707-0.293c0.391-0.391,0.391-1.023,0-1.414L15.151,13.615z"/>
+                            </g>
+                        </svg>
+                        <span class="time__name">{{ event.start_date }}</span>
+                    </div>
+                    <div class="event__buttons">
+						<div class="button_delete">
+							<a href="{% url 'emanager:DeleteEvent' event.id %}">
+								<span></span>
+								<span></span>
+							</a>
+						</div>
+						<div class="button_update">
+							<a href="{% url 'emanager:EventEditView' event.id %}">
+								<svg viewBox="0 0 612.85 612.85">
+									<g>
+										<path d="M600.485,221.792c-14.431-50.499-40.137-94.332-77.939-132.134c-29.109-29.103-62.616-51.376-100.026-66.57 C384.995,7.843,346.585,0,306.778,0v37.467c69.91,0,138.928,26.998,190.005,78.282c32.886,33.014,55.38,71.63,67.912,115.413 c12.553,43.869,14.38,87.98,4.682,132.47c-9.699,44.489-29.438,83.962-59.548,118.418l-52.184-51.177v127.452l130.13,2.006 l-52.184-52.183c34.791-39.479,57.871-84.641,69.247-135.153C616.207,322.482,614.83,271.983,600.485,221.792z"/>
+										<path d="M47.854,382.03c-12.532-43.776-14.052-87.98-4.353-132.47c9.706-44.497,29.774-84.305,59.883-118.76l52.183,51.854V54.531 L25.438,53.189l51.855,51.519c-34.791,39.473-57.878,84.633-69.247,135.146c-11.376,50.513-10.084,101.04,4.346,151.539 c14.344,50.198,40.143,94.003,77.946,131.806c29.103,29.104,62.609,51.377,100.02,66.57c37.532,15.244,76.276,23.08,116.42,23.08 v-36.797c-70.924,0-138.929-27.325-190.348-78.944C83.544,464.087,60.408,425.898,47.854,382.03z"/>
+									</g>
+								</svg>
+							</a>
+						</div>
+					</div>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="noevents">Событий нет.</p>
+    {% endif %}
+
+    {% if user.comments %}
+    	<span class="user-page__title comments__title">Комментарии:</span>
+        <ul class="user-page__comments">
+        {% for comment in user.comments %}
+            <li class="comment">
+                <a href="{% url 'emanager:event_detail' comment.event_id %}" class="comment__event-name">Событие: {{ comment.event_name }}</a>
+                <span class="comment__date">{{ comment.created_date }}</span>
+                <span class="comment__text">Текст: {{ comment.text | truncatewords:10 }}...</span>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="nocomments">Комментариев нет.</p>
+    {% endif %}
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="//maps.google.com/maps/api/js?v=3&key=AIzaSyBvL5WzpfNmncgr8KD4QHACfRNJOkerpX8&libraries=geometry&language=&hl=&region="></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/controllers/details_controller.js' %}"></script>

@@ -69,7 +69,7 @@ body {
 	position: relative;
 	width: 100%;
 	min-height: 100%;
-	height: 100%;
+	/*height: 100%;*/
 	padding: 80px 20px 0 20px;
 	background: #eee;
 	box-sizing: border-box;
@@ -577,6 +577,240 @@ body {
 	color: #44f;
 	cursor: pointer;
 	transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
+}
+
+/* --- User page --- */
+
+.user-page {
+	display: flex;
+	flex-flow: column nowrap;
+	flex-grow: 1;
+	flex-shrink: 0;
+	height: auto;
+}
+
+.user-page .user-page__title {
+	display: inline-block;
+	width: 100%;
+	padding-bottom: 10px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+	border-bottom: 2px solid #44f;
+}
+
+.user-page .events {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.user-page .events .event {
+	position: relative;
+	width: 100%;
+	min-height: 120px;
+	height: auto;
+	color: #44f;
+}
+
+.user-page .events .event:first-child {
+	margin: 20px 0;
+}
+
+.user-page .events .event + .event {
+	margin-bottom: 20px;
+}
+
+.user-page .events .event .event__image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #fff center center no-repeat;
+    background-size: cover;
+}
+
+.user-page .events .event .event__skin {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	opacity: 0.8;
+}
+
+.user-page .events .event .event__container {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.user-page .events .event .event__name, .events .event .event__name:visited, .events .event .event__name:focus {
+	position: relative;
+	display: inline-block;
+	font-family: Circe;
+	font-size: 24px;
+	line-height: 26px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.user-page .events .event .event__line {
+	width: 100%;
+	height: 2px;
+	margin-top: 5px;
+	background: #44f;
+}
+
+.user-page .events .event .event__address {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: 10px;
+}
+
+.user-page .events .event .event__address .address__icon {
+	width: 24px;
+	height: 30px;
+	fill: #44f;
+}
+
+.user-page .events .event .event__address .address__name {
+	margin: 5px 0 0 10px;
+	font-family: Circe;
+	font-size: 20px;
+	line-height: 22px;
+}
+
+.user-page .events .event .event__time {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: 10px;
+}
+
+.user-page .events .event .event__time .time__icon {
+	width: 24px;
+	height: 24px;
+	fill: #44f;
+}
+
+.user-page .events .event .event__time .time__name {
+	margin: 5px 0 0 10px;
+	font-family: Circe;
+	font-size: 20px;
+	line-height: 22px;
+}
+
+.user-page .events .event .event__buttons {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	max-width: 80px;
+	height: 40px;
+	margin-top: 10px;
+	border: 2px solid #44f;
+	border-radius: 5px;
+}
+
+.event__buttons .button_delete,
+.event__buttons .button_delete a,
+.event__buttons .button_update {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+}
+
+.event__buttons .button_delete span {
+	position: absolute;
+	width: 30px;
+	height: 2px;
+	top: 19px;
+	left: 5px;
+	background: #44f;
+}
+
+.event__buttons .button_delete span:first-child {
+	transform: rotate(45deg);
+}
+
+.event__buttons .button_delete span:last-child {
+	transform: rotate(-45deg);
+}
+
+.event__buttons .button_update a {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+.event__buttons .button_update svg {
+	position: relative;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	padding: 5px;
+}
+
+.event__buttons .button_update svg path {
+	fill: #44f;
+}
+
+.user-page .noevents,
+.user-page .nocomments {
+	font-family: Circe;
+	font-size: 30px;
+	line-height: 34px;
+}
+
+.user-page .user-page__comments {
+	display: flex;
+	flex-flow: column nowrap;
+	margin: 0 0 20px 0;
+	padding: 0;
+	list-style: none;
+}
+
+.user-page__comments .comment {
+	display: flex;
+	flex-flow: row wrap;
+	width: 100%;
+	margin-top: 20px;
+	padding: 20px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+	border: 2px solid #44f;
+	box-sizing: border-box;
+}
+
+.user-page__comments .comment .comment__event-name {
+	width: 50%;
+	padding: 0 10px 10px 0;
+	box-sizing: border-box;
+	text-decoration: none;
+	color: #44f;
+}
+
+.user-page__comments .comment .comment__date {
+	width: 50%;
+	padding: 0 0 10px 10px;
+	box-sizing: border-box;
+	opacity: 0.5;
+	text-align: right;
+}
+
+.user-page__comments .comment .comment__text {
+	width: 100%;
+	padding: 20px 0 0 0;
+	border-top: 2px solid #44f;
 }
 
 /* --- Registration page ---*/

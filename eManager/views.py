@@ -52,6 +52,11 @@ def ChangeComment(request, pk):
 
 		return JsonResponse({'errors': errors})
 
+def DeleteEvent(request, pk):
+	event = Event.objects.filter(pk=pk).first()
+	event.delete()
+	return redirect('emanager:profile')
+
 class EventEditView(generic.edit.UpdateView):
 	model = Event
 	template_name = 'eManager/event/edit.html'
@@ -103,13 +108,16 @@ class LogoutView(generic.base.View):
 		logout(request)
 		return HttpResponseRedirect("/")
 
-# class ProfileView(generic.DetailView):
-# 	model = MyUser
-# 	template_name = 'eManager/profile.html'
+class ProfileView(generic.base.TemplateView):
+	template_name = 'eManager/profile.html'
 
-# 	def get_context_data(self, **kwargs):
-# 		context = super(ProfileView, self).get_context_data(**kwargs)
-# 		context['event'].comments = Comment.objects.filter(event_id=context['event'].id)
+	def get_context_data(self, **kwargs):
+		context = super(ProfileView, self).get_context_data(**kwargs)
+		context['user'] = MyUser.objects.filter(id=self.request.user.id).first()
+		context['user'].events = Event.objects.filter(user_id=self.request.user.id)
+		context['user'].comments = Comment.objects.filter(user_id=self.request.user.id)
 
-# 		for comment in context['event'].comments:
-# 			comment.username = MyUser.objects.filter(id=comment.user_id).first()
+		for comment in context['user'].comments:
+			comment.event_name = Event.objects.filter(id=comment.event_id).first()
+
+		return context
