@@ -34,6 +34,17 @@ body {
 	z-index: 999;
 }
 
+.header .profile {
+	margin-right: 20px;
+	font-family: Circe;
+	font-size: 20px;
+	line-height: 40px;
+}
+
+.header .profile a {
+	color: #fff;
+}
+
 .header .exit,
 .header .enter {
 	position: relative;
@@ -78,7 +89,7 @@ body {
 .wrapper {
 	position: relative;
 	width: 100%;
-	min-height: 100%;
+	/*min-height: 100%;*/
 	height: auto;
 	box-sizing: border-box;
 	overflow: hidden;
@@ -589,15 +600,132 @@ body {
 	height: auto;
 }
 
-.user-page .user-page__title {
+.user-page .menu {
+	position: fixed;
+	display: flex;
+	flex-flow: column nowrap;
+	top: 80px;
+	left: 20px;
+	width: 25vw;
+	padding: 20px;
+	border: 2px solid #44f;
+	box-sizing: border-box;
+	z-index: 999;
+}
+
+.user-page .menu a {
 	display: inline-block;
-	width: 100%;
-	padding-bottom: 10px;
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
 	color: #44f;
+}
+
+.user-page .menu a:not(:last-child) {
+	margin-bottom: 20px;
+}
+
+.user-page .wrapper {
+	padding-left: calc(25vw + 25px); 
+}
+
+.user-page .user-page__title {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	width: 100%;
+	padding-bottom: 10px;
+	font-family: Circe;
+	font-size: 36px;
+	line-height: 40px;
+	color: #44f;
 	border-bottom: 2px solid #44f;
+}
+
+.user-page .title__text {
+	margin-top: 4px;
+}
+
+.user-page .add_button {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	border: 2px solid #44f;
+	border-radius: 5px;
+}
+
+.user-page .add_button a {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+.user-page .add_button a span {
+	position: absolute;
+	display: inline-block;
+	top: 19px;
+	left: 5px;
+	width: 30px;
+	height: 2px;
+	background: #44f;
+}
+
+.user-page .add_button a span:last-child {
+	transform: rotate(90deg);
+}
+
+.user-page .organizations {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.user-page .organizations .organization {
+	position: relative;
+	width: 100%;
+	min-height: 120px;
+	height: auto;
+	color: #44f;
+}
+
+.user-page .organizations .organization:first-child {
+	margin: 20px 0;
+}
+
+.user-page .organizations .organization + .organization {
+	margin-bottom: 20px;
+}
+
+.user-page .organizations .organization .organization__container {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.user-page .organizations .organization .organization__name,
+.user-page .organizations .organization .organization__description {
+	position: relative;
+	display: inline-block;
+	font-family: Circe;
+	font-size: 24px;
+	line-height: 26px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.user-page .organizations .organization .organization__description {
+	margin-top: 20px;
+}
+
+.user-page .organizations .organization .organization__line {
+	width: 100%;
+	height: 2px;
+	margin-top: 5px;
+	background: #44f;
 }
 
 .user-page .events {

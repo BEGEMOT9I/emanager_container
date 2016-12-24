@@ -64,18 +64,15 @@ class MyUser(AbstractBaseUser):
 
 	def has_perm(self, perm, obj=None):
 		"Does the user have a specific permission?"
-		# Simplest possible answer: Yes, always
 		return True
 
 	def has_module_perms(self, app_label):
 		"Does the user have permissions to view the app `app_label`?"
-		# Simplest possible answer: Yes, always
 		return True
 
 	@property
 	def is_staff(self):
 		"Is the user a member of staff?"
-		# Simplest possible answer: All admins are staff
 		return self.is_admin
 
 	class Meta:
@@ -83,10 +80,24 @@ class MyUser(AbstractBaseUser):
 		verbose_name_plural = 'пользователи'
 
 @python_2_unicode_compatible
+class Organization(models.Model):
+	creator = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+	name = models.CharField(max_length=1000, verbose_name='название')
+	description = models.CharField(max_length=1000, verbose_name='описание')
+	image = models.ImageField(upload_to='images', blank=True, verbose_name='постер')
+
+	class Meta:
+		verbose_name = 'организация'
+		verbose_name_plural = 'организации'
+
+	def __str__(self):
+		return self.name
+
+@python_2_unicode_compatible
 class Event(models.Model):
 	
 	user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name='пользователи')
-	organizer = models.CharField(max_length=200, verbose_name='организатор', default='')
+	organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
 	name = models.CharField(max_length=1000, verbose_name='название')
 	start_date = models.DateTimeField(verbose_name='дата начала')
 	description = models.CharField(max_length=1000, verbose_name='описание')

@@ -1,0 +1,37 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
+
+<header class="header">
+	{% if user.is_authenticated %}
+        <div class="profile">
+            <a href="{% url 'emanager:UserProfileView' %}">{{ user.username }}</a>
+        </div>
+		<div class="exit">
+			<a href="{% url 'emanager:logout' %}">Выйти</a>
+		</div>
+	{% else %}
+		<div class="enter">
+			<a href="{% url 'emanager:login' %}">Войти</a>
+		</div>
+	{% endif %}
+</header>
+<div class="container user-page" data-controller="">
+    <aside class="menu">
+        <a href="{% url 'emanager:UserOrganizationsView' %}">Организации</a>
+        <a href="{% url 'emanager:UserEventsView' %}">События</a>
+        <a href="{% url 'emanager:UserCommentsView' %}">Комментарии</a>
+    </aside>
+	<div class="wrapper">
+    	<div class="user-page__title events__title">
+    		<span class="title__text">Информация о пользователе</span>
+    	</div>
+        <span>Тут типо что-то будет, хз пока что, но будет. Отвечаю.</span>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="//maps.google.com/maps/api/js?v=3&key=AIzaSyBvL5WzpfNmncgr8KD4QHACfRNJOkerpX8&libraries=geometry&language=&hl=&region="></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/controllers/details_controller.js' %}"></script>

@@ -19,29 +19,14 @@
 		<form action="" method="post" enctype="multipart/form-data">
 			{% csrf_token %}
 			<div class="event-edit__row">
-				<label for="id_organization">Организатор: </label>
-				{{ form.organization }}
-				{{ form.organization.errors }}
-			</div>
-			<div class="event-edit__row">
 				<label for="id_name">Название: </label>
 				{{ form.name }}
 				{{ form.name.errors }}
 			</div>
 			<div class="event-edit__row">
-				<label for="id_start_date">Дата начала: </label>
-				{{ form.start_date }}
-				{{ form.start_date.errors }}
-			</div>
-			<div class="event-edit__row">
 				<label for="id_description">Описание: </label>
 				{{ form.description }}
 				{{ form.description.errors }}
-			</div>
-			<div class="event-edit__row">
-				<label for="id_address">Место проведения: </label>
-				{{ form.address }}
-				{{ form.address.errors }}
 			</div>
 			<div class="event-edit__row event-edit__row_image">
 				<label class="row__label" for="id_image">Постер: </label>

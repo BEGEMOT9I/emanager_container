@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .forms import UserChangeForm, UserCreationForm
 
-from .models import Event, MyUser, Comment
+from .models import Event, MyUser, Comment, Organization
 
 
 class UserAdmin(BaseUserAdmin):
@@ -31,6 +31,7 @@ class UserAdmin(BaseUserAdmin):
 	filter_horizontal = ()
 
 # Now register the new UserAdmin...
+admin.site.register(Organization)
 admin.site.register(Event)
 admin.site.register(MyUser, UserAdmin)
 admin.site.register(Comment)

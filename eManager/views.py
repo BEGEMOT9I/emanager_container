@@ -8,15 +8,10 @@ from django.contrib.auth.forms import AuthenticationForm
 
 # Auth form and helper for working with user session
 from django.contrib.auth import login, logout, authenticate
-from .models import Event, MyUser, Comment
+from .models import Event, MyUser, Comment, Organization
 from .forms import UserCreationForm as RegistrationForm
 
-class EventsListView(generic.ListView):
-	template_name = 'eManager/index.html'
-	context_object_name = 'event_list'
-
-	def get_queryset(self):
-		return Event.objects.order_by('start_date')
+# Comment block
 
 def AddComment(request, pk):
 	if request.method == 'POST':
@@ -27,12 +22,6 @@ def AddComment(request, pk):
 		return redirect('emanager:event_detail_with_comment', pk=event.id, comment_id=instance.id)
 		
 	return HttpResponseRedirect('/')
-
-def DeleteComment(request, pk):
-	comment = Comment.objects.filter(pk=pk).first()
-	event_id = comment.event_id
-	comment.delete()
-	return redirect('emanager:event_detail', pk=event_id)
 
 def ChangeComment(request, pk):
 	if request.method == 'POST':
@@ -52,15 +41,36 @@ def ChangeComment(request, pk):
 
 		return JsonResponse({'errors': errors})
 
-def DeleteEvent(request, pk):
-	event = Event.objects.filter(pk=pk).first()
-	event.delete()
-	return redirect('emanager:profile')
+def DeleteComment(request, pk):
+	comment = Comment.objects.filter(pk=pk).first()
+	event_id = comment.event_id
+	comment.delete()
+	return redirect('emanager:event_detail', pk=event_id)
+
+# Event block
+
+class EventCreateView(generic.edit.CreateView):
+	model = Event
+	template_name = 'eManager/event/add.html'
+	fields = ['organization', 'name', 'start_date', 'description', 'address', 'image']
+
+	def form_valid(self, form):
+		instance = form.save(commit = False)
+		instance.user = self.request.user
+		instance.save()
+		return super(EventCreateView, self).form_valid(form)
+
+	def get_success_url(self):
+		return '/profile/'
 
 class EventEditView(generic.edit.UpdateView):
 	model = Event
 	template_name = 'eManager/event/edit.html'
-	fields = ['organizer', 'name', 'start_date', 'description', 'address', 'image']
+	fields = ['organization', 'name', 'start_date', 'description', 'address', 'image']
+
+	def get_context_data(self, **kwargs):
+		context = super(EventEditView, self).get_context_data(**kwargs)
+		return context
 
 	def get_success_url(self):
 		return '/'
@@ -71,11 +81,42 @@ class EventDetailsView(generic.DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(EventDetailsView, self).get_context_data(**kwargs)
+		# context['event'].organization = Organization.objects.filter(id=context['event'].organization_id).first().name
 		context['event'].comments = Comment.objects.filter(event_id=context['event'].id)
 		for comment in context['event'].comments:
 			comment.username = MyUser.objects.filter(id=comment.user_id).first()
 
 		return context
+
+def DeleteEvent(request, pk):
+	event = Event.objects.filter(pk=pk).first()
+	event.delete()
+	return redirect('emanager:UserEventsView')
+
+class EventsListView(generic.ListView):
+	template_name = 'eManager/index.html'
+	context_object_name = 'event_list'
+
+	def get_queryset(self):
+		return Event.objects.order_by('start_date')
+
+# Organization block
+
+class OrganizationCreateView(generic.edit.CreateView):
+	model = Organization
+	template_name = 'eManager/organization/add.html'
+	fields = ['name', 'description', 'image']
+
+	def form_valid(self, form):
+		instance = form.save(commit = False)
+		instance.creator = self.request.user
+		instance.save()
+		return super(OrganizationCreateView, self).form_valid(form)
+
+	def get_success_url(self):
+		return '/profile/'
+
+# Registration and authentication
 
 class RegistrationView(generic.edit.CreateView):
 	model = MyUser
@@ -108,16 +149,37 @@ class LogoutView(generic.base.View):
 		logout(request)
 		return HttpResponseRedirect("/")
 
-class ProfileView(generic.base.TemplateView):
-	template_name = 'eManager/profile.html'
+# User page
+
+class UserOrganizationsView(generic.base.TemplateView):
+	template_name = 'eManager/profile/organizations.html'
 
 	def get_context_data(self, **kwargs):
-		context = super(ProfileView, self).get_context_data(**kwargs)
-		context['user'] = MyUser.objects.filter(id=self.request.user.id).first()
-		context['user'].events = Event.objects.filter(user_id=self.request.user.id)
-		context['user'].comments = Comment.objects.filter(user_id=self.request.user.id)
+		context = super(UserOrganizationsView, self).get_context_data(**kwargs)
+		context['organizations'] = Organization.objects.filter(creator_id=self.request.user.id)
 
-		for comment in context['user'].comments:
+		return context
+
+class UserEventsView(generic.base.TemplateView):
+	template_name = 'eManager/profile/events.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(UserEventsView, self).get_context_data(**kwargs)
+		context['events'] = Event.objects.filter(user_id=self.request.user.id)
+
+		return context
+
+class UserCommentsView(generic.base.TemplateView):
+	template_name = 'eManager/profile/comments.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(UserCommentsView, self).get_context_data(**kwargs)
+		context['comments'] = Comment.objects.filter(user_id=self.request.user.id)
+
+		for comment in context['comments']:
 			comment.event_name = Event.objects.filter(id=comment.event_id).first()
 
 		return context
+
+class UserProfileView(generic.base.TemplateView):
+	template_name = 'eManager/profile/index.html'
