@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 # Auth form and helper for working with user session
 from django.contrib.auth import login, logout, authenticate
 from .models import Event, MyUser, Comment, Organization
-from .forms import UserCreationForm as RegistrationForm
+from .forms import UserCreationForm as RegistrationForm, EventCreateForm
 
 # Comment block
 
@@ -52,11 +52,17 @@ def DeleteComment(request, pk):
 class EventCreateView(generic.edit.CreateView):
 	model = Event
 	template_name = 'eManager/event/add.html'
-	fields = ['organization', 'name', 'start_date', 'description', 'address', 'image']
+	form_class = EventCreateForm
+
+	def get_form_kwargs(self):
+		kwargs = super(EventCreateView, self).get_form_kwargs()
+		kwargs['user'] = self.request.user
+		return kwargs
 
 	def form_valid(self, form):
 		instance = form.save(commit = False)
 		instance.user = self.request.user
+		instance.organization_id = form.cleaned_data['organization'].id
 		instance.save()
 		return super(EventCreateView, self).form_valid(form)
 
@@ -66,7 +72,19 @@ class EventCreateView(generic.edit.CreateView):
 class EventEditView(generic.edit.UpdateView):
 	model = Event
 	template_name = 'eManager/event/edit.html'
-	fields = ['organization', 'name', 'start_date', 'description', 'address', 'image']
+	form_class = EventCreateForm
+
+	def get_form_kwargs(self):
+		kwargs = super(EventEditView, self).get_form_kwargs()
+		kwargs['user'] = self.request.user
+		return kwargs
+
+	def form_valid(self, form):
+		instance = form.save(commit = False)
+		instance.user = self.request.user
+		instance.organization_id = form.cleaned_data['organization'].id
+		instance.save()
+		return super(EventEditView, self).form_valid(form)
 
 	def get_context_data(self, **kwargs):
 		context = super(EventEditView, self).get_context_data(**kwargs)
@@ -141,7 +159,6 @@ class LoginView(generic.edit.FormView):
 		return super(LoginView, self).form_valid(form)
 
 	def form_invalid(self, form):
-		print 'invalid'
 		return super(LoginView, self).form_invalid(form)
 
 class LogoutView(generic.base.View):

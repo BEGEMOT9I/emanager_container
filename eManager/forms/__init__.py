@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from eManager.models import MyUser, Comment
+from eManager.models import MyUser, Comment, Organization, Event
 
 class UserCreationForm(forms.ModelForm):
 	password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -35,3 +35,14 @@ class UserChangeForm(forms.ModelForm):
 
 	def clean_password(self):
 		return self.initial["password"]
+
+class EventCreateForm(forms.ModelForm):
+
+	def __init__(self, *args, **kwargs):
+		user = kwargs.pop('user', None)
+		super(EventCreateForm, self).__init__(*args,**kwargs)
+		self.fields['organization'] = forms.ModelChoiceField(queryset=Organization.objects.filter(creator=user))
+
+	class Meta:
+		model = Event
+		fields = ['name', 'start_date', 'description', 'address', 'image']
