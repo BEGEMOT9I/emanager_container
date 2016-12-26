@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.views import generic
 from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm
 
 # Auth form and helper for working with user session
@@ -14,7 +15,7 @@ from .forms import UserCreationForm as RegistrationForm, EventCreateForm
 # Comment block
 
 def AddComment(request, pk):
-	if request.method == 'POST':
+	if request.method == 'POST' and request.user.is_authenticated:
 		event = Event.objects.filter(pk=pk).first()
 		user = request.user
 		text = request.POST['text']
@@ -24,14 +25,14 @@ def AddComment(request, pk):
 	return HttpResponseRedirect('/')
 
 def ChangeComment(request, pk):
-	if request.method == 'POST':
+	if request.method == 'POST' and request.user.is_authenticated:
 		text = request.POST['new_text']
 		errors = []
 
 		if not text:
 			errors.append('Пустой текст')
 
-		comments = Comment.objects.filter(pk=pk)
+		comments = Comment.objects.filter(pk=pk, user_id=request.user.id)
 
 		if not comments:
 			errors.append('Нет коммента')
@@ -41,15 +42,20 @@ def ChangeComment(request, pk):
 
 		return JsonResponse({'errors': errors})
 
+	return HttpResponseRedirect('/')
+
 def DeleteComment(request, pk):
-	comment = Comment.objects.filter(pk=pk).first()
-	event_id = comment.event_id
-	comment.delete()
-	return redirect('emanager:event_detail', pk=event_id)
+	if request.user.is_authenticated:
+		comment = Comment.objects.filter(pk=pk, user_id=request.user.id).first()
+		event_id = comment.event_id
+		comment.delete()
+		return redirect('emanager:event_detail', pk=event_id)
+
+	return HttpResponseRedirect('/')
 
 # Event block
 
-class EventCreateView(generic.edit.CreateView):
+class EventCreateView(LoginRequiredMixin, generic.edit.CreateView):
 	model = Event
 	template_name = 'eManager/event/add.html'
 	form_class = EventCreateForm
@@ -69,7 +75,7 @@ class EventCreateView(generic.edit.CreateView):
 	def get_success_url(self):
 		return '/profile/'
 
-class EventEditView(generic.edit.UpdateView):
+class EventEditView(LoginRequiredMixin, generic.edit.UpdateView):
 	model = Event
 	template_name = 'eManager/event/edit.html'
 	form_class = EventCreateForm
@@ -99,7 +105,6 @@ class EventDetailsView(generic.DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(EventDetailsView, self).get_context_data(**kwargs)
-		# context['event'].organization = Organization.objects.filter(id=context['event'].organization_id).first().name
 		context['event'].comments = Comment.objects.filter(event_id=context['event'].id)
 		for comment in context['event'].comments:
 			comment.username = MyUser.objects.filter(id=comment.user_id).first()
@@ -107,9 +112,12 @@ class EventDetailsView(generic.DetailView):
 		return context
 
 def DeleteEvent(request, pk):
-	event = Event.objects.filter(pk=pk).first()
-	event.delete()
-	return redirect('emanager:UserEventsView')
+	if request.user.is_authenticated:
+		event = Event.objects.filter(pk=pk, user_id=request.user.id).first()
+		event.delete()
+		return redirect('emanager:UserEventsView')
+
+	return HttpResponseRedirect('/')
 
 class EventsListView(generic.ListView):
 	template_name = 'eManager/index.html'
@@ -120,7 +128,7 @@ class EventsListView(generic.ListView):
 
 # Organization block
 
-class OrganizationCreateView(generic.edit.CreateView):
+class OrganizationCreateView(LoginRequiredMixin, generic.edit.CreateView):
 	model = Organization
 	template_name = 'eManager/organization/add.html'
 	fields = ['name', 'description', 'image']
@@ -156,7 +164,11 @@ class LoginView(generic.edit.FormView):
 	def form_valid(self, form):
 		self.user = form.get_user()
 		login(self.request, self.user)
-		return super(LoginView, self).form_valid(form)
+
+		if self.request.GET and self.request.GET['next']:
+			return HttpResponseRedirect(self.request.GET['next'])
+		else:
+			return super(LoginView, self).form_valid(form)
 
 	def form_invalid(self, form):
 		return super(LoginView, self).form_invalid(form)
@@ -168,7 +180,7 @@ class LogoutView(generic.base.View):
 
 # User page
 
-class UserOrganizationsView(generic.base.TemplateView):
+class UserOrganizationsView(LoginRequiredMixin, generic.base.TemplateView):
 	template_name = 'eManager/profile/organizations.html'
 
 	def get_context_data(self, **kwargs):
@@ -177,7 +189,7 @@ class UserOrganizationsView(generic.base.TemplateView):
 
 		return context
 
-class UserEventsView(generic.base.TemplateView):
+class UserEventsView(LoginRequiredMixin, generic.base.TemplateView):
 	template_name = 'eManager/profile/events.html'
 
 	def get_context_data(self, **kwargs):
@@ -186,7 +198,7 @@ class UserEventsView(generic.base.TemplateView):
 
 		return context
 
-class UserCommentsView(generic.base.TemplateView):
+class UserCommentsView(LoginRequiredMixin, generic.base.TemplateView):
 	template_name = 'eManager/profile/comments.html'
 
 	def get_context_data(self, **kwargs):
@@ -198,5 +210,5 @@ class UserCommentsView(generic.base.TemplateView):
 
 		return context
 
-class UserProfileView(generic.base.TemplateView):
+class UserProfileView(LoginRequiredMixin, generic.base.TemplateView):
 	template_name = 'eManager/profile/index.html'
