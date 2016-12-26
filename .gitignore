@@ -1,2 +1,3 @@
+eManager/migrations/*
 emanager_container/settings.py
 eManager/upload/*
