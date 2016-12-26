@@ -64,6 +64,13 @@
 				<textarea class="comment-add__text" type="textarea" name="text" id="text" value="" placeholder="Оставить комментарий"></textarea>
 				<input class="comment-add__button" type="submit" value="Отправить" />
 			</form>
+			<div class="event__share">
+				<form class="comment-add" action="{% url 'emanager:ShareEvent' event.id %}" method="post">
+				{% csrf_token %}
+				{% load staticfiles %}
+				<p><input type="image" src="{% static 'img/gc.png' %}" alt="Отправить в Google Calendar" width=20%/></p>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

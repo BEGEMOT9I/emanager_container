@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^events/(?P<pk>[0-9]+)/comment/(?P<comment_id>[0-9]+)/', views.EventDetailsView.as_view(), name='event_detail_with_comment'),
     url(r'^events/(?P<pk>[0-9]+)/edit/$', views.EventEditView.as_view(), name='EventEditView'),
     url(r'^events/(?P<pk>[0-9]+)/delete/$', views.DeleteEvent, name='DeleteEvent'),
+    url(r'^events/(?P<pk>[0-9]+)/share/$', views.ShareEvent, name='ShareEvent'),
+
     # Organization
     url(r'^organizations/add/$', views.OrganizationCreateView.as_view(), name='OrganizationCreateView'),
     # Profile
