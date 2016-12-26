@@ -1,19 +1,6 @@
-{% load staticfiles %}
+{% extends "eManager/layout.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
-
-<header class="header">
-	{% if user.is_authenticated %}
-		<div class="exit">
-			<a href="{% url 'emanager:logout' %}">Выйти</a>
-		</div>
-	{% else %}
-		<div class="enter">
-			<a href="{% url 'emanager:login' %}">Войти</a>
-		</div>
-	{% endif %}
-</header>
+{% block content %}
 <div class="container event-details" data-controller="DetailsController">
 	<div class="event__image" style="background-image: url({{ event.image.url }})"></div>
 	<div class="wrapper">
@@ -80,8 +67,10 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
 
-<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+{% block scripts %}
+{% load staticfiles %}
 <script src="//maps.google.com/maps/api/js?v=3&key=AIzaSyBvL5WzpfNmncgr8KD4QHACfRNJOkerpX8&libraries=geometry&language=&hl=&region="></script>
-<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/controllers/details_controller.js' %}"></script>
+{% endblock %}

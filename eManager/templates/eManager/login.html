@@ -1,8 +1,6 @@
-{% load staticfiles %}
+{% extends "eManager/layout.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
-
+{% block content %}
 <div class="container login" data-controller="">
     <div class="wrapper">
     	<span class="title">Авторизация</span>
@@ -14,3 +12,4 @@
 		</form>
 	</div>
 </div>
+{% endblock %}

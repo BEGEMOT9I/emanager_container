@@ -1,25 +1,9 @@
-{% load staticfiles %}
+{% extends "eManager/layout.html" %}
+{% load menu %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
-
-<header class="header">
-	{% if user.is_authenticated %}
-		<div class="exit">
-			<a href="{% url 'emanager:logout' %}">Выйти</a>
-		</div>
-	{% else %}
-		<div class="enter">
-			<a href="{% url 'emanager:login' %}">Войти</a>
-		</div>
-	{% endif %}
-</header>
+{% block content %}
 <div class="container user-page" data-controller="">
-    <aside class="menu">
-        <a href="{% url 'emanager:UserOrganizationsView' %}">Организации</a>
-        <a href="{% url 'emanager:UserEventsView' %}">События</a>
-        <a href="{% url 'emanager:UserCommentsView' %}">Комментарии</a>
-    </aside>
+    {% menu %}
 	<div class="wrapper">
     	<div class="user-page__title organizations__title">
     		<span class="title__text">Организации:</span>
@@ -48,6 +32,4 @@
         {% endif %}
     </div>
 </div>
-
-<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+{% endblock %}
