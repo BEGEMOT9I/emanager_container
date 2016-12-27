@@ -103,6 +103,8 @@ class Event(models.Model):
 	description = models.CharField(max_length=1000, verbose_name='описание')
 	address = models.CharField(max_length=200, verbose_name='место проведения', default='')
 	image = models.ImageField(upload_to='images', blank=True, verbose_name='постер')
+	evaluation = models.FloatField(blank=False, verbose_name='Количество оценок', default=1)
+	user_list = models.CharField(max_length=1000,blank=False, verbose_name='Проголосовавшие пользователи', default='')
 
 	class Meta:
 		verbose_name = 'событие'

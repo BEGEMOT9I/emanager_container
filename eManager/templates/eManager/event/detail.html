@@ -13,6 +13,26 @@
 		<span class="event__description">Описание: {{event.description}}</span>
 		<span class="event__line"></span>
 		<span class="event__date">Начало: {{event.start_date}}</span>
+		<span class="event__date">Оценка: {{ event.evaluation }}</span>
+		<form class="do_rate" action="{% url 'emanager:ChangeRating' event.id %}" method="post">
+		{% csrf_token %}
+		{% if user.is_authenticated %}
+			<p><b>Поставьте оценку событию</b></p>
+			<p>
+				<input type="radio" name="answer" value="1">Ужасно!
+				<br>
+				<input type="radio" name="answer" value="2">Плохо
+				<br>
+				<input type="radio" name="answer" value="3">Удовлетворительно
+				<br>
+				<input type="radio" name="answer" value="4">Неплохо!<br>
+				<input type="radio" name="answer" value="5">Класс!
+			</p>
+			<p>
+				<input class="rating-add-button" type="submit" value="Подтвердить">
+			</p>
+			</form>
+		{% endif %}
 		<div class="event__comments">
 			<span class="comments__title">Комментарии:</span>
 

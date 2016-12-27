@@ -133,6 +133,31 @@ def ShareEvent(request, pk):
 	event = Event.objects.filter(pk=pk).first()
 	quickstart.main(event)
 	return redirect('/')
+
+def ChangeRating(request, pk):
+	if request.method == 'POST' and request.user.is_authenticated:
+		event = Event.objects.filter(pk=pk).first()
+		user = request.user
+		user_list = event.user_list.split(" ")
+		count = 0
+
+		for users in user_list:
+			count += 1
+			if users == user.username:
+				return redirect('emanager:event_detail', pk=event.id)
+
+		event.user_list += user.username
+		event.user_list += ' '
+		rating = float(event.evaluation)
+		count = float(count)
+		sumrate = rating * count
+		sumrate += float(request.POST['answer'])
+		if event.evaluation == 0:
+			event.evaluation = 1
+		event.evaluation = sumrate / event.evaluation
+		event.save()
+
+		return redirect('emanager:event_detail', pk=event.id)
 	
 # Organization block
 
