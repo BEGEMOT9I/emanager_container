@@ -65,6 +65,15 @@
 				<input class="comment-add__button" type="submit" value="Отправить" />
 			</form>
 		</div>
+		<div class="event__share">
+				<form class="comment-add" action="{% url 'emanager:ShareEvent' event.id %}" method="post">
+				{% csrf_token %}
+				{% load staticfiles %}
+				<p>
+					<label><input type="image" src="{% static 'img/gc.png' %}"width=20% align="middle"/>Отправить в Google Calendar</label>
+				</p>
+				</form>
+		</div>
 	</div>
 </div>
 {% endblock %}

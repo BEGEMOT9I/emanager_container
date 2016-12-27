@@ -12,6 +12,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .models import Event, MyUser, Comment, Organization
 from .forms import UserCreationForm as RegistrationForm, EventCreateForm
+import quickstart
 
 # Comment block
 
@@ -123,10 +124,16 @@ def DeleteEvent(request, pk):
 class EventsListView(generic.ListView):
 	template_name = 'eManager/index.html'
 	context_object_name = 'event_list'
+	paginate_by = 3
 
 	def get_queryset(self):
 		return Event.objects.order_by('start_date')
-
+		
+def ShareEvent(request, pk):
+	event = Event.objects.filter(pk=pk).first()
+	quickstart.main(event)
+	return redirect('/')
+	
 # Organization block
 
 class OrganizationCreateView(LoginRequiredMixin, generic.edit.CreateView):
