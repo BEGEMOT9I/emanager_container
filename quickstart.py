@@ -14,7 +14,6 @@ import json
 import time
 from pytz import timezone
 
-
 try:
 	import argparse
 	flags = tools.argparser.parse_args([])
@@ -73,16 +72,17 @@ def main(event):
 
 	start = event.start_date.astimezone(timezone('Europe/Moscow'))
 	start = start.__str__()[0:10]
-	
+
 	event_body = {
-		'summary': event.description,
+		'summary': event.name,
 		'location': event.address,
 		'start': {
 			'date': start,
 		}, 
 		'end': {
 			'date': start,
-		} 
+		},
+		'description': event.description
 	}
 
 	service.events().insert(calendarId='primary', body = event_body).execute()
