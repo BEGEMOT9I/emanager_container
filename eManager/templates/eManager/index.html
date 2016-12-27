@@ -57,7 +57,23 @@
         </ul>
     {% else %}
         <p class="noevents">Событий нет.</p>
-    {% endif %}
     </div>
+        {% endif %}
+        {% if is_paginated %}
+            <center><div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a class="pagination_symb" text-decoration="none" href="?page={{ page_obj.previous_page_number }}">&#9668;</a>
+                {% endif %}
+                <span class="page-current">
+                    страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a class="pagination_symb" href="?page={{ page_obj.next_page_number }}">&#9658;</a>
+                {% endif %}
+            </span>
+        </div>
+        </center>
+    {% endif %}
 </div>
 {% endblock %}
