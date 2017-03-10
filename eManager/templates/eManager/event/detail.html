@@ -13,26 +13,41 @@
 		<span class="event__description">Описание: {{event.description}}</span>
 		<span class="event__line"></span>
 		<span class="event__date">Начало: {{event.start_date}}</span>
-		<span class="event__date">Оценка: {{ event.evaluation }}</span>
-		<form class="do_rate" action="{% url 'emanager:ChangeRating' event.id %}" method="post">
-		{% csrf_token %}
-		{% if user.is_authenticated %}
-			<p><b>Поставьте оценку событию</b></p>
-			<p>
-				<input type="radio" name="answer" value="1">Ужасно!
-				<br>
-				<input type="radio" name="answer" value="2">Плохо
-				<br>
-				<input type="radio" name="answer" value="3">Удовлетворительно
-				<br>
-				<input type="radio" name="answer" value="4">Неплохо!<br>
-				<input type="radio" name="answer" value="5">Класс!
-			</p>
-			<p>
-				<input class="rating-add-button" type="submit" value="Подтвердить">
-			</p>
+		<span class="event__line"></span>
+		<span class="event__date">Оценка: {{event.evaluation}}</span>
+
+		{% if user.is_authenticated and not user.username in event.user_list.split %}
+			<form class="event__rating" action="{% url 'emanager:ChangeRating' event.id %}" method="post">
+				{% csrf_token %}
+				<p>
+					<b>Поставьте оценку событию</b>
+				</p>
+				<p class="rating__eval">
+					<input type="radio" name="answer" value="1">
+					<label>Ужасно!</label>
+				</p>
+				<p class="rating__eval">
+					<input type="radio" name="answer" value="2">
+					<label>Плохо</label>
+				</p>
+				<p class="rating__eval">
+					<input type="radio" name="answer" value="3">
+					<label>Удовлетворительно</label>
+				</p>
+				<p class="rating__eval">
+					<input type="radio" name="answer" value="4">
+					<label>Неплохо!</label>
+				</p>
+				<p class="rating__eval">
+					<input type="radio" name="answer" value="5">
+					<label>Класс!</label>
+				</p>
+				<p>
+					<input class="rating__button" type="submit" value="Подтвердить">
+				</p>
 			</form>
 		{% endif %}
+
 		<div class="event__comments">
 			<span class="comments__title">Комментарии:</span>
 
@@ -72,10 +87,9 @@
 								</div>
 							</div>
 						{% endif %}
-
 					</div>
 				</div>
-			{% 	empty %}
+			{% empty %}
 				<p>Нет комментариев</p>
 			{% endfor %}
 

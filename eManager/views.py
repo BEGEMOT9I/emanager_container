@@ -108,6 +108,7 @@ class EventDetailsView(generic.DetailView):
 	def get_context_data(self, **kwargs):
 		context = super(EventDetailsView, self).get_context_data(**kwargs)
 		context['event'].comments = Comment.objects.filter(event_id=context['event'].id)
+
 		for comment in context['event'].comments:
 			comment.username = MyUser.objects.filter(id=comment.user_id).first()
 
@@ -138,23 +139,28 @@ def ChangeRating(request, pk):
 	if request.method == 'POST' and request.user.is_authenticated:
 		event = Event.objects.filter(pk=pk).first()
 		user = request.user
-		user_list = event.user_list.split(" ")
+		user_list = event.user_list.encode('ascii','ignore').split(" ")
 		count = 0
 
-		for users in user_list:
-			count += 1
-			if users == user.username:
-				return redirect('emanager:event_detail', pk=event.id)
+		if user_list[0] != '':
+			for user_in_list in user_list:
+				count += 1
+				if user_in_list == user.username:
+					return redirect('emanager:event_detail', pk=event.id)
+
+		if count > 0:
+			event.user_list += ' '
 
 		event.user_list += user.username
-		event.user_list += ' '
+
 		rating = float(event.evaluation)
 		count = float(count)
 		sumrate = rating * count
 		sumrate += float(request.POST['answer'])
 		if event.evaluation == 0:
 			event.evaluation = 1
-		event.evaluation = sumrate / event.evaluation
+			
+		event.evaluation = sumrate / (count + 1)
 		event.save()
 
 		return redirect('emanager:event_detail', pk=event.id)

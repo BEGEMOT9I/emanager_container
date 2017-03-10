@@ -294,8 +294,8 @@ body {
 	width: 100%;
 	height: 100%;
 	background: rgba(0, 0, 0, 0) center center no-repeat;
-    background-size: cover;
-    opacity: 0.2;
+  background-size: cover;
+  opacity: 0.2;
 }
 
 .event-details .event__name {
@@ -304,9 +304,74 @@ body {
 	line-height: 44px;
 }
 
-.event-details .event__location, .event-details .event__organizer, .event-details .event__description, .event-details .event__date {
+.event-details .event__location,
+.event-details .event__organizer,
+.event-details .event__description,
+.event-details .event__date {
 	font-size: 22px;
 	line-height: 24px;
+}
+
+.event-details .event__rating {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.event-details .event__rating .rating__eval {
+	position: relative;
+	display: inline-flex;
+	flex-flow: row nowrap;
+	width: 177px;
+}
+
+.event-details .event__rating .rating__eval input {
+	position: absolute;
+	flex-grow: 1;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	border: none;
+	opacity: 0;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.event-details .event__rating .rating__eval label {
+	font-size: 20px;
+	text-shadow: 0px 0px 0 #11f, 0.5px 0.5px 0 #11f, 1px 1px 0 #000;
+	transform: translate3d(0, 0, 0);
+	transition: text-shadow 0.5s ease, transform 0.5s ease;
+}
+
+.event-details .event__rating .rating__eval input:hover + label,
+.event-details .event__rating .rating__eval input:checked + label {
+	text-shadow: 0px 0px 0 #11f;
+	transform: translate3d(1px, 1px, 0);
+}
+
+.event-details .event__rating .rating__button {
+	height: 40px;
+	margin: 0;
+	padding: 0 5px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	background: #88f;
+	border: 2px solid #fff;
+	border-radius: 2px;
+	color: #fff;
+	cursor: pointer;
+	transition: background 0.5s ease, border 0.5s ease;
+}
+
+.event-details .event__rating .rating__button:hover {
+	background: #44f;
+	border: 2px solid #44f;
+	color: #fff;
 }
 
 .event-details #event__map {
