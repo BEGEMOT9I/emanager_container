@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.views import generic
@@ -139,7 +140,7 @@ def ChangeRating(request, pk):
 	if request.method == 'POST' and request.user.is_authenticated:
 		event = Event.objects.filter(pk=pk).first()
 		user = request.user
-		user_list = event.user_list.encode('ascii','ignore').split(" ")
+		user_list = event.user_list.split(" ")
 		count = 0
 
 		if user_list[0] != '':
