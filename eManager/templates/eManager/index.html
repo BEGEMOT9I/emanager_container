@@ -15,7 +15,7 @@
         {% for event in event_list %}
             <li class="event">
                 {% if event.image %}
-                    <div class="event__image" style="background-image: url({{ event.image.url }})"></div>
+                    <div class="event__image" style="background-image: url({{ event.image.url|default_if_none:'#' }})"></div>
                     <div class="event__skin"></div>
                 {% endif %}
                 <div class="event__container">
