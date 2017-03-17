@@ -2,26 +2,26 @@
 {% load menu %}
 
 {% block content %}
-<div class="container user-page" data-controller="">
-    {% menu %}
-	<div class="wrapper">
-        <div class="user-page__title comments__title">
-            <span class="title__text">Комментарии:</span>
-        </div>
-
-        {% if comments %}
-            <ul class="user-page__comments">
-            {% for comment in comments %}
-                <li class="comment">
-                    <a href="{% url 'emanager:event_detail' comment.event_id %}" class="comment__event-name">Событие: {{ comment.event_name }}</a>
-                    <span class="comment__date">{{ comment.created_date }}</span>
-                    <span class="comment__text">Текст: {{ comment.text | truncatewords:10 }}...</span>
-                </li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p class="nocomments">Комментариев нет.</p>
-        {% endif %}
+<main class="container user-page" data-controller="">
+  {% menu %}
+	<section class="wrapper">
+    <div class="user-page__title comments__title">
+      <span class="title__text">Комментарии:</span>
     </div>
-</div>
+
+    {% if comments %}
+      <ul class="user-page__comments">
+      {% for comment in comments %}
+        <li class="comment">
+          <a href="{% url 'emanager:event_detail' comment.event_id %}" class="comment__event-name">Событие: {{ comment.event_name }}</a>
+          <span class="comment__date">{{ comment.created_date }}</span>
+          <span class="comment__text">Текст: {{ comment.text | truncatewords:10 }}...</span>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p class="nocomments">Комментариев нет.</p>
+    {% endif %}
+  </section>
+</main>
 {% endblock %}

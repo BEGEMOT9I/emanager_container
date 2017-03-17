@@ -1,15 +1,15 @@
 {% extends "eManager/layout.html" %}
 
 {% block content %}
-<div class="container login" data-controller="">
-    <div class="wrapper">
-    	<span class="title">Авторизация</span>
+<main class="container login" data-controller="">
+  <section class="wrapper">
+    <span class="title">Авторизация</span>
 		<form class="form" action="" method="post">
 			{% csrf_token %}
 			{{ form.as_p }}
 			{{ field.errors }}
 			<button type="submit">Войти</button>
 		</form>
-	</div>
-</div>
+	</section>
+</main>
 {% endblock %}

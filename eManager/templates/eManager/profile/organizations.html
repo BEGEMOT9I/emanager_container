@@ -2,34 +2,34 @@
 {% load menu %}
 
 {% block content %}
-<div class="container user-page" data-controller="">
-    {% menu %}
-	<div class="wrapper">
-    	<div class="user-page__title organizations__title">
-    		<span class="title__text">Организации:</span>
-    		<div class="add_button">
-    			<a href="{% url 'emanager:OrganizationCreateView' %}">
-    				<span></span>
-    				<span></span>
-    			</a>
-    		</div>
-    	</div>
+<main class="container user-page" data-controller="">
+  {% menu %}
+	<section class="wrapper">
+  	<div class="user-page__title organizations__title">
+  		<span class="title__text">Организации:</span>
+  		<div class="add_button">
+  			<a href="{% url 'emanager:OrganizationCreateView' %}">
+  				<span></span>
+  				<span></span>
+  			</a>
+  		</div>
+  	</div>
 
-        {% if organizations %}
-            <ul class="organizations">
-            {% for organization in organizations %}
-                <li class="organization">
-                    <div class="organization__container">
-                        <span class="organization__name">{{ organization.name }}</span>
-                        <!-- <span class="organization__line"></span> -->
-                        <span class="organization__description">{{ organization.description }}</span>
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p class="noevents">Организаций нет.</p>
-        {% endif %}
-    </div>
-</div>
+    {% if organizations %}
+      <ul class="organizations">
+      {% for organization in organizations %}
+        <li class="organization">
+          <div class="organization__container">
+            <span class="organization__name">{{ organization.name }}</span>
+            <!-- <span class="organization__line"></span> -->
+            <span class="organization__description">{{ organization.description }}</span>
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p class="noevents">Организаций нет.</p>
+    {% endif %}
+  </section>
+</main>
 {% endblock %}

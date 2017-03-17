@@ -1,9 +1,9 @@
 {% extends "eManager/layout.html" %}
 
 {% block content %}
-<div class="container event-details" data-controller="DetailsController">
+<main class="container event-details" data-controller="DetailsController">
 	<div class="event__image" style="background-image: url({{ event.image.url }})"></div>
-	<div class="wrapper">
+	<section class="wrapper">
 		<h1 class="event__name">{{event.name}}</h1>
 		<span class="event__location">Место проведения: {{event.address}}</span>
 		<div id="event__map" data-position="{{event.address}}"></div>
@@ -108,8 +108,8 @@
 				</p>
 				</form>
 		</div>
-	</div>
-</div>
+	</section>
+</main>
 {% endblock %}
 
 {% block scripts %}
