@@ -141,6 +141,8 @@ class EventsListView(generic.ListView):
 	def get_context_data(self, **kwargs):
 		data = super(EventsListView, self).get_context_data(**kwargs)
 		data['filter_form'] = EventFilterForm()	
+		data['filter_form'].fields['org_id'].initial = self.filter_args['org_id'];
+		data['filter_form'].fields['order'].initial = self.filter_args['order'];
 		return data	
 
 	def post(self, request, *args, **kwargs):
