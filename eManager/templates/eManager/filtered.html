@@ -12,12 +12,21 @@
             </div>
         </div>
         <div class="filter">
-            <form action="" method="post">
-                {% csrf_token %}
-                {{filter_form.org_id}}
-                {{filter_form.order}}
-            <input type="submit">Применить фильтр</input>
-            </form>
+            <div class="org_select">
+            <form class="form" action="{% url 'emanager:FilterEventList' %}" method="post">
+            {% csrf_token %}
+                <select name="org_name">
+                    {% for org in organizations %}
+                    <option>{{organizations.name}}</option>>
+                    {% endfor %}
+                </select>
+                <select name="order">
+                    {% for order in order_by %}
+                    <option>{{order_by}}</option>>
+                    {% endfor %}
+                </select>
+            <input type="submit">Применить фильтр</form>
+            </div>
         </div>
         <ul class="events">
         {% for event in event_list %}

@@ -12,7 +12,7 @@ from django.contrib.auth.forms import AuthenticationForm
 # Auth form and helper for working with user session
 from django.contrib.auth import login, logout, authenticate
 from .models import Event, MyUser, Comment, Organization
-from .forms import UserCreationForm as RegistrationForm, EventCreateForm
+from .forms import UserCreationForm as RegistrationForm, EventCreateForm, EventFilterForm
 import quickstart
 
 # Comment block
@@ -127,10 +127,42 @@ class EventsListView(generic.ListView):
 	template_name = 'eManager/index.html'
 	context_object_name = 'event_list'
 	paginate_by = 3
+	filter_args = {'org_id': '', 'order': 'start_date'}
 
 	def get_queryset(self):
-		return Event.objects.order_by('start_date')
-		
+		org_id = self.filter_args['org_id']
+		order = self.filter_args['order']
+		if org_id == '':
+			query = Event.objects.all()
+		else:
+			query = Event.objects.filter(organization=org_id)
+		return query.order_by(order)
+
+	def get_context_data(self, **kwargs):
+		data = super(EventsListView, self).get_context_data(**kwargs)
+		data['filter_form'] = EventFilterForm()	
+		return data	
+
+	def post(self, request, *args, **kwargs):
+		org_id = request.POST.get('org_id')
+		print(org_id)
+		order = request.POST['order']
+		self.filter_args['org_id'] = org_id
+		self.filter_args['order'] = order
+		return redirect('/')
+
+def FilterEventList(request, org_name, org_pk):
+	if request.method == 'POST':
+		org_name = request.POST['org_name']
+		order = equest.POST['order']
+		org_pk = Organization.objects.filter(name=org_name).first()
+		events = Event.objects.filter(organization=org_pk)
+		if order == 'new > old':
+			events.order_by('start_date')
+		if order == 'old > new':
+			events.order_by('-start_date')
+		return render('filtered.html', {'org_name':org_name, 'order':order})	
+
 def ShareEvent(request, pk):
 	event = Event.objects.filter(pk=pk).first()
 	quickstart.main(event)
