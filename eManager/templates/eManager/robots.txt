@@ -1,0 +1,3 @@
+User-agent: *
+Host: https://emanager.ru/
+Sitemap: https://emanager.ru/sitemap.xml

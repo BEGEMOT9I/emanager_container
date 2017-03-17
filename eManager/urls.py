@@ -1,11 +1,14 @@
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from . import views
 
 app_name = 'emanager'
 
 urlpatterns = [
+    url(r'^robots\.txt$', TemplateView.as_view(template_name='eManager/robots.txt', content_type='text/plain')),
+    url(r'^sitemap\.xml$', TemplateView.as_view(template_name='eManager/sitemap.xml', content_type='application/xml')),
 	# Events
 	url(r'^$', views.EventsListView.as_view(), name='index'),
 	url(r'^events/add/$', views.EventCreateView.as_view(), name='EventCreateView'),
