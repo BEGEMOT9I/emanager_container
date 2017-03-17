@@ -50,6 +50,6 @@ class EventCreateForm(forms.ModelForm):
 
 class EventFilterForm(forms.Form):
 	ORG_CHOICES = Organization.objects.all()
-	ORDER_CHOICES = (('start_date', 'сначала новые'), ('-start_date', 'сначала старые'))
+	ORDER_CHOICES = (('start_date', 'сначала ближайшие'), ('-start_date', 'сначала далекие'))
 	org_id = forms.ChoiceField(choices=BLANK_CHOICE_DASH + [(obj.id, obj.name) for obj in ORG_CHOICES])		
 	order = forms.ChoiceField(choices=ORDER_CHOICES)

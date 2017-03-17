@@ -151,18 +151,6 @@ class EventsListView(generic.ListView):
 		self.filter_args['order'] = order
 		return redirect('/')
 
-def FilterEventList(request, org_name, org_pk):
-	if request.method == 'POST':
-		org_name = request.POST['org_name']
-		order = equest.POST['order']
-		org_pk = Organization.objects.filter(name=org_name).first()
-		events = Event.objects.filter(organization=org_pk)
-		if order == 'new > old':
-			events.order_by('start_date')
-		if order == 'old > new':
-			events.order_by('-start_date')
-		return render('filtered.html', {'org_name':org_name, 'order':order})	
-
 def ShareEvent(request, pk):
 	event = Event.objects.filter(pk=pk).first()
 	quickstart.main(event)

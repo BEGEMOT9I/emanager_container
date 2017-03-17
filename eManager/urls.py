@@ -8,7 +8,6 @@ app_name = 'emanager'
 urlpatterns = [
 	# Events
 	url(r'^$', views.EventsListView.as_view(), name='index'),
-    url(r'^filter/(?P<org_name>[\w\-]+)/(?P<order>[\w\-]+)/$', views.FilterEventList, name='filtered'),
 	url(r'^events/add/$', views.EventCreateView.as_view(), name='EventCreateView'),
     url(r'^events/(?P<pk>[0-9]+)/$', views.EventDetailsView.as_view(), name='event_detail'),
     url(r'^events/(?P<pk>[0-9]+)/comment/(?P<comment_id>[0-9]+)/', views.EventDetailsView.as_view(), name='event_detail_with_comment'),
