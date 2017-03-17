@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from eManager.models import MyUser, Comment, Organization, Event
 
@@ -25,16 +26,12 @@ class UserCreationForm(forms.ModelForm):
 			user.save()
 		return user
 
-
 class UserChangeForm(forms.ModelForm):
-	password = ReadOnlyPasswordHashField()
+	password = forms.CharField(widget=forms.PasswordInput())
 
 	class Meta:
 		model = MyUser
-		fields = ('username', 'email', 'password', 'is_active', 'is_admin')
-
-	def clean_password(self):
-		return self.initial["password"]
+		fields = ('username', 'email')
 
 class EventCreateForm(forms.ModelForm):
 

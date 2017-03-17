@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^organizations/add/$', views.OrganizationCreateView.as_view(), name='OrganizationCreateView'),
     # Profile
     url(r'^profile/$', views.UserProfileView.as_view(), name='UserProfileView'),
+    url(r'^profile/edit/$', views.UserEditView.as_view(), name='UserEditView'),
     url(r'^profile/organizations/$', views.UserOrganizationsView.as_view(), name='UserOrganizationsView'),
     url(r'^profile/events/$', views.UserEventsView.as_view(), name='UserEventsView'),
     url(r'^profile/comments/$', views.UserCommentsView.as_view(), name='UserCommentsView'),

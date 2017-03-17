@@ -5,13 +5,14 @@ from django.shortcuts import redirect
 from django.views import generic
 from django import forms, template
 
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm
 
 # Auth form and helper for working with user session
 from django.contrib.auth import login, logout, authenticate
 from .models import Event, MyUser, Comment, Organization
-from .forms import UserCreationForm as RegistrationForm, EventCreateForm
+from .forms import UserCreationForm as RegistrationForm, UserChangeForm, EventCreateForm
 import quickstart
 
 # Comment block
@@ -251,3 +252,26 @@ class UserCommentsView(LoginRequiredMixin, generic.base.TemplateView):
 
 class UserProfileView(LoginRequiredMixin, generic.base.TemplateView):
 	template_name = 'eManager/profile/index.html'
+
+class UserEditView(LoginRequiredMixin, generic.edit.UpdateView):
+	model = MyUser
+	template_name = 'eManager/profile/edit.html'
+	form_class = UserChangeForm
+
+	def get_object(self):
+		return self.request.user
+
+	def form_valid(self, form):
+		self.object = form.save(commit=False)
+		self.object.user = self.request.user
+		self.object.user.set_password(form.cleaned_data["password"])
+		self.object.save()
+		update_session_auth_hash(self.request, self.object.user)
+		return super(UserEditView, self).form_valid(form)
+
+	def form_invalid(self, form):
+		print form
+		return super(UserEditView, self).form_invalid(form)
+
+	def get_success_url(self):
+		return '/profile'

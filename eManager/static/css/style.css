@@ -322,6 +322,7 @@ body {
 	display: inline-flex;
 	flex-flow: row nowrap;
 	width: 177px;
+	margin: 5px 0;
 }
 
 .event-details .event__rating .rating__eval input {
@@ -342,15 +343,15 @@ body {
 
 .event-details .event__rating .rating__eval label {
 	font-size: 20px;
-	text-shadow: 0px 0px 0 #11f, 0.5px 0.5px 0 #11f, 1px 1px 0 #000;
+	text-shadow: 0px 0px 0 #fff, 0.5px 0.5px 0 #fff, 1px 1px 0 #fff, 1.5px 1.5px 0 #fff, 2px 2px 1px #fff;
 	transform: translate3d(0, 0, 0);
 	transition: text-shadow 0.5s ease, transform 0.5s ease;
 }
 
 .event-details .event__rating .rating__eval input:hover + label,
 .event-details .event__rating .rating__eval input:checked + label {
-	text-shadow: 0px 0px 0 #11f;
-	transform: translate3d(1px, 1px, 0);
+	text-shadow: 0px 0px 0 #fff;
+	transform: translate3d(2px, 2px, 0);
 }
 
 .event-details .event__rating .rating__button {
@@ -1004,6 +1005,52 @@ body {
 	width: 100%;
 	padding: 20px 0 0 0;
 	border-top: 2px solid #44f;
+}
+
+/* --- User edit page ---*/
+
+.user-edit__row {
+	display: flex;
+	flex-flow: row nowrap;
+	padding: 20px 0; 
+	border-bottom: 2px solid #44f;
+}
+
+.user-edit__row label,
+.user-edit__row input {
+	display: inline-block;
+	flex-grow: 1;
+	flex-shrink: 1;
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+}
+
+.user-edit__row input {
+	width: 100%;
+	margin-left: 20px;
+	padding: 5px 10px;
+	background: #fff;
+}
+
+.user-page .user-edit__button {
+	width: 150px;
+	margin-top: 10px;
+	padding: 5px 10px 3px 10px;
+	background: rgba(0, 0, 0, 0);
+	border: 2px solid #44f;
+	border-radius: 2px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #44f;
+	cursor: pointer;
+	transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
 }
 
 /* --- Registration page ---*/
