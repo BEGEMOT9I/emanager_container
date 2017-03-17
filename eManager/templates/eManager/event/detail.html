@@ -1,8 +1,11 @@
 {% extends "eManager/layout.html" %}
 
 {% block content %}
+<<<<<<< HEAD
 <main class="container event-details" data-controller="DetailsController">
-	<div class="event__image" style="background-image: url({{ event.image.url }})"></div>
+	{% if event.image %}
+		<div class="event__image" style="background-image: url({{ event.image.url }})"></div>
+	{% endif %}
 	<section class="wrapper">
 		<h1 class="event__name">{{event.name}}</h1>
 		<span class="event__location">Место проведения: {{event.address}}</span>

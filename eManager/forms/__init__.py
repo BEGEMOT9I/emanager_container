@@ -1,6 +1,9 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.db.models.fields import BLANK_CHOICE_DASH
 
 from eManager.models import MyUser, Comment, Organization, Event
 
@@ -43,3 +46,9 @@ class EventCreateForm(forms.ModelForm):
 	class Meta:
 		model = Event
 		fields = ['name', 'start_date', 'description', 'address', 'image']
+
+class EventFilterForm(forms.Form):
+	ORG_CHOICES = Organization.objects.all()
+	ORDER_CHOICES = (('start_date', 'сначала ближайшие'), ('-start_date', 'сначала далекие'))
+	org_id = forms.ChoiceField(choices=BLANK_CHOICE_DASH + [(obj.id, obj.name) for obj in ORG_CHOICES])		
+	order = forms.ChoiceField(choices=ORDER_CHOICES)

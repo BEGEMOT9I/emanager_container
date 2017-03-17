@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render_to_response
 from django.views import generic
@@ -12,7 +13,7 @@ from django.contrib.auth.forms import AuthenticationForm
 # Auth form and helper for working with user session
 from django.contrib.auth import login, logout, authenticate
 from .models import Event, MyUser, Comment, Organization
-from .forms import UserCreationForm as RegistrationForm, UserChangeForm, EventCreateForm
+from .forms import UserCreationForm as RegistrationForm, UserChangeForm, EventCreateForm, EventFilterForm
 import quickstart
 
 # Comment block
@@ -127,10 +128,32 @@ class EventsListView(generic.ListView):
 	template_name = 'eManager/index.html'
 	context_object_name = 'event_list'
 	paginate_by = 3
+	filter_args = {'org_id': '', 'order': 'start_date'}
 
 	def get_queryset(self):
-		return Event.objects.order_by('start_date')
-		
+		org_id = self.filter_args['org_id']
+		order = self.filter_args['order']
+		if org_id == '':
+			query = Event.objects.all()
+		else:
+			query = Event.objects.filter(organization=org_id)
+		return query.order_by(order)
+
+	def get_context_data(self, **kwargs):
+		data = super(EventsListView, self).get_context_data(**kwargs)
+		data['filter_form'] = EventFilterForm()	
+		data['filter_form'].fields['org_id'].initial = self.filter_args['org_id'];
+		data['filter_form'].fields['order'].initial = self.filter_args['order'];
+		return data	
+
+	def post(self, request, *args, **kwargs):
+		org_id = request.POST.get('org_id')
+		print(org_id)
+		order = request.POST['order']
+		self.filter_args['org_id'] = org_id
+		self.filter_args['order'] = order
+		return redirect('/')
+
 def ShareEvent(request, pk):
 	event = Event.objects.filter(pk=pk).first()
 	quickstart.main(event)
@@ -140,7 +163,7 @@ def ChangeRating(request, pk):
 	if request.method == 'POST' and request.user.is_authenticated:
 		event = Event.objects.filter(pk=pk).first()
 		user = request.user
-		user_list = event.user_list.encode('ascii','ignore').split(" ")
+		user_list = event.user_list.split(" ")
 		count = 0
 
 		if user_list[0] != '':

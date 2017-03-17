@@ -4,12 +4,20 @@
 <main class="container list" data-controller="">
   <section class="wrapper">
     {% if event_list %}
-      <div class="finder">
+      <!-- <div class="finder">
         <span class="finder__title">Поиск:</span>
         <div class="finder__field">
           <input class="text" type="text" name="find" disabled oninput="FindEvents(this)" onfocusout="DeactivateField(this)">
           <div class="skin" onclick="ActivateField(this)"></div>
         </div>
+      </div> -->
+      <div class="filter">
+        <form action="" method="post">
+          {% csrf_token %}
+          {{filter_form.org_id}}
+          {{filter_form.order}}
+        <input type="submit">Применить фильтр</input>
+        </form>
       </div>
       <ul class="events">
       {% for event in event_list %}
