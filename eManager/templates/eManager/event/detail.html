@@ -3,10 +3,12 @@
 {% block content %}
 <<<<<<< HEAD
 <main class="container event-details" data-controller="DetailsController">
-	{% if event.image %}
-		<div class="event__image" style="background-image: url({{ event.image.url }})"></div>
-	{% endif %}
 	<section class="wrapper">
+		<picture class="event__image">
+      {% if event.image %}
+        <img src="{{event.image.url}}">
+      {% endif %}
+    </picture>
 		<h1 class="event__name">{{event.name}}</h1>
 		<span class="event__location">Место проведения: {{event.address}}</span>
 		<div id="event__map" data-position="{{event.address}}"></div>
@@ -25,28 +27,33 @@
 				<p>
 					<b>Поставьте оценку событию</b>
 				</p>
-				<p class="rating__eval">
-					<input type="radio" name="answer" value="1">
-					<label>Ужасно!</label>
-				</p>
-				<p class="rating__eval">
-					<input type="radio" name="answer" value="2">
-					<label>Плохо</label>
-				</p>
-				<p class="rating__eval">
-					<input type="radio" name="answer" value="3">
-					<label>Удовлетворительно</label>
-				</p>
-				<p class="rating__eval">
-					<input type="radio" name="answer" value="4">
-					<label>Неплохо!</label>
-				</p>
-				<p class="rating__eval">
-					<input type="radio" name="answer" value="5">
-					<label>Класс!</label>
-				</p>
+	
+					<p class="rating__eval">
+						<input id="radio" class="radio" type="radio" name="answer" value="1">
+						<label for="radio">Ужасно!</label>
+					</p>
+
+					<p class="rating__eval">
+						<input id="radio1" class="radio" type="radio" name="answer" value="2">
+						<label for="radio1">Плохо</label>
+					</p>
+	
+					<p class="rating__eval">
+						<input id="radio2" class="radio" type="radio" name="answer" value="3">
+						<label for="radio2">Удовлетворительно</label>
+					</p>
+	
+					<p class="rating__eval">
+						<input id="radio3" class="radio" type="radio" name="answer" value="4">
+						<label for="radio3">Неплохо!</label>
+					</p>
+
+					<p class="rating__eval">
+						<input id="radio4" class="radio" type="radio" name="answer" value="5">
+						<label for="radio4">Класс!</label>
+					</p>
 				<p>
-					<input class="rating__button" type="submit" value="Подтвердить">
+					<input class="button" type="submit" value="Подтвердить">
 				</p>
 			</form>
 		{% endif %}
@@ -99,7 +106,7 @@
 			<form class="comment-add" action="{% url 'emanager:AddComment' event.id %}" method="post">
 				{% csrf_token %}
 				<textarea class="comment-add__text" type="textarea" name="text" id="text" value="" placeholder="Оставить комментарий"></textarea>
-				<input class="comment-add__button" type="submit" value="Отправить" />
+				<input class="button" type="submit" value="Отправить" />
 			</form>
 		</div>
 		<div class="event__share">

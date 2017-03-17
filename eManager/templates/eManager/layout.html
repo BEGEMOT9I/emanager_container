@@ -21,13 +21,25 @@
 {% endblock %}
 
 <header class="header">
+  <a class="icon" href="/">
+    <svg viewBox="0 0 277.777 277.777">
+      <path d="M8.025,138.889c0,76.583,58.705,138.889,130.863,138.889c46.959,0,90.567-26.928,113.809-70.275l-24.481-13.126  C209.821,228.686,175.592,250,138.888,250c-35.024,0-66.022-18.93-84.66-47.793v-49.43h215.524v-13.889  C269.752,62.305,211.047,0,138.888,0S8.025,62.305,8.025,138.889z M54.228,75.57c18.638-28.863,49.636-47.793,84.66-47.793  c36.505,0,68.634,20.564,86.955,51.505V125H54.228V75.57z" fill="none"/>
+    </svg>
+  </a>
 	{% if user.is_authenticated %}
     <div class="profile">
-        <a href="{% url 'emanager:UserProfileView' %}">{{ user.username }}</a>
+      <span onclick="ToggleMenu()">{{ user.username }}</span>
     </div>
 		<div class="exit">
 			<a href="{% url 'emanager:logout' %}">Выйти</a>
 		</div>
+    <nav class="menu">
+      <a href="{% url 'emanager:UserProfileView' %}">Профиль</a>
+      <a href="{% url 'emanager:UserEditView' %}">Редактировать данные</a>
+      <a href="{% url 'emanager:UserOrganizationsView' %}">Организации</a>
+      <a href="{% url 'emanager:UserEventsView' %}">События</a>
+      <a href="{% url 'emanager:UserCommentsView' %}">Комментарии</a>
+    </nav>
 	{% else %}
 		<div class="enter">
 			<a href="{% url 'emanager:login' %}">Войти</a>

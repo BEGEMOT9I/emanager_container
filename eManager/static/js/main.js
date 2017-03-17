@@ -47,6 +47,10 @@ function FindEvents(element) {
 	});
 }
 
+function ToggleMenu() {
+	$('.header .menu').toggleClass('menu_show');
+}
+
 var Comment = {
 	focusin: function(element) {
 		$(element).addClass('active');

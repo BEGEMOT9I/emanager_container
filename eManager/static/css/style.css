@@ -1,7 +1,7 @@
 /*
 
 Basic size: 20px;
-Basic color: #44f, rgb(68,68,255);
+Basic color: #933ec5, rgb(68,68,255);
 Basic background color: #eee;
 
 */
@@ -28,10 +28,58 @@ body {
 	left: 0;
 	width: 100%;
 	height: 60px;
-	background: #44f;
 	padding: 10px 20px;
+	background: #933ec5;
+	border-bottom: 1px solid #aaa;
 	box-sizing: border-box;
 	z-index: 999;
+	perspective: 1000px;
+}
+
+@keyframes icon {
+	0% {
+		stroke-dasharray: 0% 50%;
+	}
+
+	50% {
+		stroke-dasharray: 100% 0%;
+	}
+
+	100% {
+		stroke-dasharray: 0% 50%;
+	}
+}
+
+.header .icon {
+	position: absolute;
+	display: inline-flex;
+	top: 10px;
+	left: 50%;
+	width: 40px;
+	height: 40px;
+	margin-left: -20px;
+	padding: 2px;
+	box-sizing: border-box;
+}
+
+.header .icon:hover svg path {
+	fill: #fff;
+}
+
+.header .icon svg {
+	width: 100%;
+	height: 100%;
+	fill: transparent;
+	stroke-width: 10;
+	stroke-dasharray: 25% 50%;
+	stroke: #fff;
+	overflow: visible;
+	animation: icon 6s ease infinite;
+}
+
+.header .icon svg path {
+	fill: transparent;
+	transition: fill 0.5s ease;
 }
 
 .header .profile {
@@ -41,8 +89,63 @@ body {
 	line-height: 40px;
 }
 
-.header .profile a {
+.header .profile span {
 	color: #fff;
+	line-height: 2.1;
+	cursor: pointer;
+}
+
+.header .menu {
+	position: absolute;
+	display: flex;
+	flex-flow: column nowrap;
+	top: 80px;
+	right: 20px;
+	width: 25vw;
+	padding: 15px 10px;
+	background: #fff;
+	border: 1px solid #aaa;
+	border-radius: 2px;
+	opacity: 0;
+	box-sizing: border-box;
+	transform: rotateX(-90deg);
+	transform-origin: 50% -20px;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.header .menu.menu_show {
+	opacity: 1;
+	transform: rotateX(0);
+}
+
+.header .menu.menu_show  a {
+	pointer-events: auto;
+}
+
+.header .menu a {
+	display: inline-flex;
+	padding: 0 10px;
+	font-family: Circe;
+	font-size: 22px;
+	line-height: 24px;
+	color: #000;
+	text-decoration: none;
+	pointer-events: none;
+	text-shadow: 1px 1px 1px transparent;
+	transition: text-shadow 0.5s ease;
+}
+
+.header .menu a:not(:first-child) {
+	padding-top: 10px;
+}
+
+.header .menu a:not(:last-child) {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #aaa;
+}
+
+.header .menu a:hover {
+	text-shadow: 1px 1px 1px #933ec5;
 }
 
 .header .exit,
@@ -78,16 +181,19 @@ body {
 
 .container {
 	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
 	width: 100%;
 	min-height: 100%;
-	/*height: 100%;*/
 	padding: 80px 20px 0 20px;
-	background: #eee;
+	/*height: 100%;*/
 	box-sizing: border-box;
 }
 
 .wrapper {
 	position: relative;
+	max-width: 1100px;
 	width: 100%;
 	/*min-height: 100%;*/
 	height: auto;
@@ -97,43 +203,52 @@ body {
 
 /* --- Events list --- */
 
-.list .finder {
+.list {
+	padding: 80px 10px 0 10px;
+}
+
+.list .filter {
 	position: relative;
 	display: flex;
 	flex-flow: row nowrap;
 	width: 100%;
-	margin: 20px 0 40px 0;
+	margin: 0 0 10px 0;
 	padding: 10px;
-	background: #44f;
 	box-sizing: border-box;
 }
 
-.list .finder__title {
-	display: inline-block;
-	width: 120px;
-	flex: auto;
-	padding: 8px 5px 3px 5px;
+.list .filter select {
+	background: rgba(147, 62, 197, 0.1);
+	border: none;
 	font-family: Circe;
-	font-size: 20px;
-	line-height: 22px;
-	color: #fff;
-	text-align: center;
-	background: #44f;
-	border: 2px solid #fff;
-	border-radius: 2px;
+	font-size: 18px;
+	height: 29px;
+	border-radius: 5px;
 	outline: none;
-	box-sizing: border-box;
 }
 
-.list .finder__field {
+.list .filter select + * {
+	margin-left: 20px;
+}
+
+.button {
 	position: relative;
-	display: inline-flex;
-	width: 100%;
-	flex-grow: 1;
-	flex-shrink: 1;
-	margin-left: 10px;
-	box-sizing: border-box;
+	padding-top: 3px;
+	font-size: 18px;
+	font-family: Circe;
+	color: #000;
+	border: 1px solid #aaa;
+	border-radius: 5px;
+	background: rgba(147, 62, 197, 0.1);
+	box-shadow: 0 0 5px transparent;
 	cursor: pointer;
+	transform: scale(1);
+	transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.button:hover {
+	transform: scale(0.95);
+	box-shadow: 0 0 5px #888;
 }
 
 .list .finder__field .text {
@@ -145,7 +260,7 @@ body {
 	font-size: 20px;
 	line-height: 22px;
 	color: #fff;
-	background: #44f;
+	background: #933ec5;
 	border: 2px solid #fff;
 	border-radius: 2px;
 	outline: none;
@@ -168,6 +283,8 @@ body {
 }
 
 .list .events {
+	display: flex;
+	flex-flow: row wrap;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -175,49 +292,58 @@ body {
 
 .list .events .event {
 	position: relative;
-	width: 100%;
+	width: calc(50% - 20px);
 	min-height: 120px;
 	height: auto;
-	color: #44f;
+	margin: 0 10px 20px 10px;
+	color: #000;
+	background: rgba(147, 62, 197, 0.1);
+	border: 1px solid #aaa;
+	border-radius: 1px;
+	box-shadow: 0 0px 10px 10px transparent;
+	box-sizing: border-box;
+	transform: rotateY(0);
+	transform-origin: 50% 0;
+	transition: transform 0.5s ease-out, box-shadow 0.5s ease;
+	perspective: 1000px; 
 }
 
-.list .events .event:first-child {
-	margin: 20px 0;
-}
-
-.list .events .event + .event {
-	margin-bottom: 20px;
+.list .events .event:hover {
+	box-shadow: 0 10px 10px #888;
+	transform: rotateX(10deg);
 }
 
 .list .events .event .event__image {
-	position: absolute;
-	top: 0;
-	left: 0;
+	position: relative;
 	width: 100%;
-	height: 100%;
-	background: #fff center center no-repeat;
-    background-size: cover;
+	max-height: 480px / 16 * 9;
+	height: calc((50vw - 30px) / 16 * 9);
 }
 
-.list .events .event .event__skin {
-	position: absolute;
+.list .events .event .event__image img {
+	position: relative;
 	width: 100%;
 	height: 100%;
-	background: #fff;
-	opacity: 0.8;
+	object-fit: cover;
 }
 
-.list .events .event .event__container {
+.list .events .event .event__container,
+.list .events .event .event__content {
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
 	width: 100%;
-	padding: 10px;
 	box-sizing: border-box;
 }
 
-.list .events .event .event__name, .events .event .event__name:visited, .events .event .event__name:focus {
+.list .events .event .event__content {
+	padding: 10px;
+}
+
+.list .events .event .event__name,
+.list .events .event .event__name:visited,
+.list .events .event .event__name:focus {
 	position: relative;
 	display: inline-block;
 	font-family: Circe;
@@ -231,7 +357,8 @@ body {
 	width: 100%;
 	height: 2px;
 	margin-top: 5px;
-	background: #44f;
+	background: #000;
+	border-radius: 1px;
 }
 
 .list .events .event .event__address {
@@ -242,9 +369,10 @@ body {
 }
 
 .list .events .event .event__address .address__icon {
+	flex-shrink: 0;
 	width: 24px;
 	height: 30px;
-	fill: #44f;
+	fill: #000;
 }
 
 .list .events .event .event__address .address__name {
@@ -264,7 +392,7 @@ body {
 .list .events .event .event__time .time__icon {
 	width: 24px;
 	height: 24px;
-	fill: #44f;
+	fill: #000;
 }
 
 .list .events .event .event__time .time__name {
@@ -284,18 +412,22 @@ body {
 
 .event-details {
 	font-family: Circe;
-	color: #44f;
+	color: #000;
 }
 
 .event-details .event__image {
-	position: absolute;
+	position: relative;
 	top: 0;
 	left: 0;
 	width: 100%;
+	max-height: 1060px / 16 * 9;
+	height: calc((100vw - 40px) / 16 * 9);
+}
+
+.event-details .event__image img {
+	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0) center center no-repeat;
-  background-size: cover;
-  opacity: 0.2;
+	object-fit: cover;
 }
 
 .event-details .event__name {
@@ -325,33 +457,48 @@ body {
 	margin: 5px 0;
 }
 
-.event-details .event__rating .rating__eval input {
-	position: absolute;
-	flex-grow: 1;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	border: none;
-	opacity: 0;
-	z-index: 1;
-	cursor: pointer;
+.radio {
+  vertical-align: top;
+  width: 17px;
+  height: 17px;
+  margin: 0 3px 0 0;
 }
-
-.event-details .event__rating .rating__eval label {
-	font-size: 20px;
-	text-shadow: 0px 0px 0 #fff, 0.5px 0.5px 0 #fff, 1px 1px 0 #fff, 1.5px 1.5px 0 #fff, 2px 2px 1px #fff;
-	transform: translate3d(0, 0, 0);
-	transition: text-shadow 0.5s ease, transform 0.5s ease;
+.radio + label {
+  cursor: pointer;
 }
-
-.event-details .event__rating .rating__eval input:hover + label,
-.event-details .event__rating .rating__eval input:checked + label {
-	text-shadow: 0px 0px 0 #fff;
-	transform: translate3d(2px, 2px, 0);
+.radio:not(checked) {
+  position: absolute;
+  opacity: 0;
+}
+.radio:not(checked) + label {
+  position: relative;
+  padding: 0 0 0 35px;
+}
+.radio:not(checked) + label:before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #933ec5;
+  border-radius: 50%;
+  background: #FFF;
+}
+.radio:not(checked) + label:after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #933ec5;
+  opacity: 0;
+  transition: all .2s;
+}
+.radio:checked + label:after {
+  opacity: 1;
 }
 
 .event-details .event__rating .rating__button {
@@ -370,8 +517,8 @@ body {
 }
 
 .event-details .event__rating .rating__button:hover {
-	background: #44f;
-	border: 2px solid #44f;
+	background: #933ec5;
+	border: 2px solid #933ec5;
 	color: #fff;
 }
 
@@ -386,7 +533,7 @@ body {
 	width: 100%;
 	height: 2px;
 	margin: 20px 0;
-	background: #44f;
+	background: #933ec5;
 }
 
 .event-details .event__comments {
@@ -395,7 +542,7 @@ body {
 	width: 100%;
 	margin: 20px 0;
 	padding: 20px;
-	border: 2px solid #44f;
+	border: 2px solid #933ec5;
 	box-sizing: border-box;
 }
 
@@ -420,7 +567,7 @@ body {
 	width: 100%;
 	height: 2px;
 	margin-bottom: 10px;
-	background: #44f;
+	background: #933ec5;
 }
 
 .comment .comment__user {
@@ -465,14 +612,13 @@ body {
 
 .comment-change .comment__text {
 	flex-grow: 1;
-	margin: 10px 20px 10px 0;
 	padding: 10px;
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
 	background: none;
 	border: none;
-	color: #44f;
+	color: #933ec5;
 	resize: none;
 	outline: none;
 }
@@ -487,7 +633,7 @@ body {
 	display: flex;
 	flex-flow: row nowrap;
 	height: 40px;
-	border: 2px solid #44f;
+	border: 2px solid #933ec5;
 	border-radius: 5px;
 }
 
@@ -506,7 +652,7 @@ body {
 	height: 2px;
 	top: 19px;
 	left: 5px;
-	background: #44f;
+	background: #933ec5;
 }
 
 .comment__buttons .button_delete span:first-child {
@@ -526,7 +672,7 @@ body {
 }
 
 .comment__buttons .button_update svg path {
-	fill: #44f;
+	fill: #933ec5;
 }
 
 .comment-add {
@@ -546,9 +692,9 @@ body {
 	padding: 10px;
 	font-size: 22px;
 	line-height: 24px;
-	color: #fff;
+	color: #000;
 	border: none;
-	background: #88f;
+	background: rgba(147, 62, 197, 0.1);
 	outline: none;
 }
 
@@ -557,7 +703,7 @@ body {
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: rgba(255, 255, 255, 0.5);
+	color: rgba(0, 0, 0, 0.5);
 }
 
 .comment-add__button {
@@ -575,7 +721,7 @@ body {
 
 .event-edit {
 	font-family: Circe;
-	color: #44f;
+	color: #933ec5;
 }
 
 .event-edit form {
@@ -589,7 +735,7 @@ body {
 	display: flex;
 	flex-flow: row nowrap;
 	padding: 20px 0; 
-	border-bottom: 2px solid #44f;
+	border-bottom: 2px solid #933ec5;
 }
 
 .event-edit__row_image {
@@ -631,7 +777,7 @@ body {
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #000;
 }
 
 .event-edit__row input {
@@ -643,15 +789,15 @@ body {
 
 .event-edit .event-edit__button {
 	width: 150px;
-	margin-top: 10px;
+	margin-top: 20px;
 	padding: 5px 10px 3px 10px;
 	background: rgba(0, 0, 0, 0);
-	border: 2px solid #44f;
+	border: 2px solid #933ec5;
 	border-radius: 2px;
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #933ec5;
 	cursor: pointer;
 	transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
 }
@@ -661,38 +807,11 @@ body {
 .user-page {
 	display: flex;
 	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
 	flex-grow: 1;
 	flex-shrink: 0;
 	height: auto;
-}
-
-.user-page .menu {
-	position: fixed;
-	display: flex;
-	flex-flow: column nowrap;
-	top: 80px;
-	left: 20px;
-	width: 25vw;
-	padding: 20px;
-	border: 2px solid #44f;
-	box-sizing: border-box;
-	z-index: 999;
-}
-
-.user-page .menu a {
-	display: inline-block;
-	font-family: Circe;
-	font-size: 22px;
-	line-height: 24px;
-	color: #44f;
-}
-
-.user-page .menu a:not(:last-child) {
-	margin-bottom: 20px;
-}
-
-.user-page .wrapper {
-	padding-left: calc(25vw + 25px); 
 }
 
 .user-page .user-page__title {
@@ -704,8 +823,8 @@ body {
 	font-family: Circe;
 	font-size: 36px;
 	line-height: 40px;
-	color: #44f;
-	border-bottom: 2px solid #44f;
+	color: #000;
+	border-bottom: 2px solid #933ec5;
 }
 
 .user-page .title__text {
@@ -716,7 +835,7 @@ body {
 	position: relative;
 	width: 40px;
 	height: 40px;
-	border: 2px solid #44f;
+	border: 2px solid #933ec5;
 	border-radius: 5px;
 }
 
@@ -734,7 +853,7 @@ body {
 	left: 5px;
 	width: 30px;
 	height: 2px;
-	background: #44f;
+	background: #933ec5;
 }
 
 .user-page .add_button a span:last-child {
@@ -752,7 +871,7 @@ body {
 	width: 100%;
 	min-height: 120px;
 	height: auto;
-	color: #44f;
+	color: #933ec5;
 }
 
 .user-page .organizations .organization:first-child {
@@ -791,7 +910,7 @@ body {
 	width: 100%;
 	height: 2px;
 	margin-top: 5px;
-	background: #44f;
+	background: #933ec5;
 }
 
 .user-page .events {
@@ -805,7 +924,7 @@ body {
 	width: 100%;
 	min-height: 120px;
 	height: auto;
-	color: #44f;
+	color: #933ec5;
 }
 
 .user-page .events .event:first-child {
@@ -858,7 +977,7 @@ body {
 	width: 100%;
 	height: 2px;
 	margin-top: 5px;
-	background: #44f;
+	background: #933ec5;
 }
 
 .user-page .events .event .event__address {
@@ -871,7 +990,7 @@ body {
 .user-page .events .event .event__address .address__icon {
 	width: 24px;
 	height: 30px;
-	fill: #44f;
+	fill: #933ec5;
 }
 
 .user-page .events .event .event__address .address__name {
@@ -891,7 +1010,7 @@ body {
 .user-page .events .event .event__time .time__icon {
 	width: 24px;
 	height: 24px;
-	fill: #44f;
+	fill: #933ec5;
 }
 
 .user-page .events .event .event__time .time__name {
@@ -908,7 +1027,7 @@ body {
 	max-width: 80px;
 	height: 40px;
 	margin-top: 10px;
-	border: 2px solid #44f;
+	border: 2px solid #933ec5;
 	border-radius: 5px;
 }
 
@@ -927,7 +1046,7 @@ body {
 	height: 2px;
 	top: 19px;
 	left: 5px;
-	background: #44f;
+	background: #933ec5;
 }
 
 .event__buttons .button_delete span:first-child {
@@ -953,7 +1072,7 @@ body {
 }
 
 .event__buttons .button_update svg path {
-	fill: #44f;
+	fill: #933ec5;
 }
 
 .user-page .noevents,
@@ -980,8 +1099,8 @@ body {
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
-	border: 2px solid #44f;
+	color: #933ec5;
+	border: 2px solid #933ec5;
 	box-sizing: border-box;
 }
 
@@ -990,7 +1109,7 @@ body {
 	padding: 0 10px 10px 0;
 	box-sizing: border-box;
 	text-decoration: none;
-	color: #44f;
+	color: #933ec5;
 }
 
 .user-page__comments .comment .comment__date {
@@ -1004,7 +1123,7 @@ body {
 .user-page__comments .comment .comment__text {
 	width: 100%;
 	padding: 20px 0 0 0;
-	border-top: 2px solid #44f;
+	border-top: 2px solid #933ec5;
 }
 
 /* --- User edit page ---*/
@@ -1013,7 +1132,7 @@ body {
 	display: flex;
 	flex-flow: row nowrap;
 	padding: 20px 0; 
-	border-bottom: 2px solid #44f;
+	border-bottom: 2px solid #933ec5;
 }
 
 .user-edit__row label,
@@ -1028,7 +1147,11 @@ body {
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #000;
+}
+
+.user-edit__row label {
+	padding-top: 3px;
 }
 
 .user-edit__row input {
@@ -1040,15 +1163,15 @@ body {
 
 .user-page .user-edit__button {
 	width: 150px;
-	margin-top: 10px;
+	margin-top: 20px;
 	padding: 5px 10px 3px 10px;
 	background: rgba(0, 0, 0, 0);
-	border: 2px solid #44f;
+	border: 2px solid #933ec5;
 	border-radius: 2px;
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #933ec5;
 	cursor: pointer;
 	transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
 }
@@ -1069,7 +1192,7 @@ body {
 	font-family: Circe;
 	font-size: 44px;
 	line-height: 50px;
-	color: #44f;
+	color: #933ec5;
 }
 
 .registration .form {
@@ -1087,7 +1210,7 @@ body {
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #933ec5;
 }
 
 .registration input[type="text"],
@@ -1100,10 +1223,10 @@ body {
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #933ec5;
 	background: none;
 	border: none;
-	border-bottom: 2px solid #44f;
+	border-bottom: 2px solid #933ec5;
 	outline: none;
 	opacity: 1;
 	box-sizing: border-box;
@@ -1114,18 +1237,18 @@ body {
 	margin-top: 10px;
 	padding: 5px 10px 3px 10px;
 	background: rgba(0, 0, 0, 0);
-	border: 2px solid #44f;
+	border: 2px solid #933ec5;
 	border-radius: 2px;
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #933ec5;
 	cursor: pointer;
 	transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
 }
 
 .registration button[type="submit"]:hover {
-	background: #44f;
+	background: #933ec5;
 	border: 2px solid rgba(0, 0, 0, 0);
 	color: #fff;
 }
@@ -1146,7 +1269,7 @@ body {
 	font-family: Circe;
 	font-size: 44px;
 	line-height: 50px;
-	color: #44f;
+	color: #933ec5;
 }
 
 .login .form {
@@ -1164,7 +1287,7 @@ body {
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #933ec5;
 }
 
 .login input[type="text"], .login input[type="password"] {
@@ -1175,10 +1298,10 @@ body {
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #933ec5;
 	background: none;
 	border: none;
-	border-bottom: 2px solid #44f;
+	border-bottom: 2px solid #933ec5;
 	outline: none;
 	opacity: 1;
 	box-sizing: border-box;
@@ -1189,18 +1312,18 @@ body {
 	margin-top: 10px;
 	padding: 5px 10px 3px 10px;
 	background: rgba(0, 0, 0, 0);
-	border: 2px solid #44f;
+	border: 2px solid #933ec5;
 	border-radius: 2px;
 	font-family: Circe;
 	font-size: 22px;
 	line-height: 24px;
-	color: #44f;
+	color: #933ec5;
 	cursor: pointer;
 	transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
 }
 
 .login button[type="submit"]:hover {
-	background: #44f;
+	background: #933ec5;
 	border: 2px solid rgba(0, 0, 0, 0);
 	color: #fff;
 }
