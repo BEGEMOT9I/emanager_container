@@ -3,6 +3,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.db.models.fields import BLANK_CHOICE_DASH
 
 from eManager.models import MyUser, Comment, Organization, Event
+from django.core.mail import send_mail
 
 class UserCreationForm(forms.ModelForm):
 	password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -46,10 +47,16 @@ class EventCreateForm(forms.ModelForm):
 
 	class Meta:
 		model = Event
-		fields = ['name', 'start_date', 'description', 'address', 'image']
+		fields = ['name', 'start_date', 'description', 'address', 'image', 'email']
 
 class EventFilterForm(forms.Form):
 	ORG_CHOICES = Organization.objects.all()
 	ORDER_CHOICES = (('start_date', 'сначала ближайшие'), ('-start_date', 'сначала далекие'))
 	org_id = forms.ChoiceField(choices=BLANK_CHOICE_DASH + [(obj.id, obj.name) for obj in ORG_CHOICES])		
 	order = forms.ChoiceField(choices=ORDER_CHOICES)
+
+class ContactForm(forms.Form):
+	subject = forms.CharField()
+	message = forms.CharField(widget=forms.Textarea)
+	sender = forms.EmailField()
+	recipient = forms.EmailField()

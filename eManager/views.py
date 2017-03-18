@@ -2,18 +2,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render_to_response
 from django.views import generic
 from django import forms, template
 
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm
 
 # Auth form and helper for working with user session
 from django.contrib.auth import login, logout, authenticate
 from .models import Event, MyUser, Comment, Organization
-from .forms import UserCreationForm as RegistrationForm, EventCreateForm, EventFilterForm
+from .forms import UserCreationForm as RegistrationForm, UserChangeForm, EventCreateForm, EventFilterForm, ContactForm
 import quickstart
+from django.core.mail import send_mail
+
 
 # Comment block
 
@@ -78,6 +81,7 @@ class EventCreateView(LoginRequiredMixin, generic.edit.CreateView):
 	def get_success_url(self):
 		return '/profile/'
 
+
 class EventEditView(LoginRequiredMixin, generic.edit.UpdateView):
 	model = Event
 	template_name = 'eManager/event/edit.html'
@@ -101,6 +105,7 @@ class EventEditView(LoginRequiredMixin, generic.edit.UpdateView):
 
 	def get_success_url(self):
 		return '/'
+
 
 class EventDetailsView(generic.DetailView):
 	model = Event
@@ -147,7 +152,6 @@ class EventsListView(generic.ListView):
 
 	def post(self, request, *args, **kwargs):
 		org_id = request.POST.get('org_id')
-		print(org_id)
 		order = request.POST['order']
 		self.filter_args['org_id'] = org_id
 		self.filter_args['order'] = order
@@ -274,3 +278,58 @@ class UserCommentsView(LoginRequiredMixin, generic.base.TemplateView):
 
 class UserProfileView(LoginRequiredMixin, generic.base.TemplateView):
 	template_name = 'eManager/profile/index.html'
+
+class UserEditView(LoginRequiredMixin, generic.edit.UpdateView):
+	model = MyUser
+	template_name = 'eManager/profile/edit.html'
+	form_class = UserChangeForm
+
+	def get_object(self):
+		return self.request.user
+
+	def form_valid(self, form):
+		self.object = form.save(commit=False)
+		self.object.user = self.request.user
+		self.object.user.set_password(form.cleaned_data["password"])
+		self.object.save()
+		update_session_auth_hash(self.request, self.object.user)
+		return super(UserEditView, self).form_valid(form)
+
+	def form_invalid(self, form):
+		print (form)
+		return super(UserEditView, self).form_invalid(form)
+
+	def get_success_url(self):
+		return '/profile'
+
+
+class SendMailView(generic.FormView):
+	form_class = ContactForm
+	template_name = 'eManager/mail.html'
+	success_url = "/"
+
+	def get_initial(self):
+		initial = super(SendMailView, self).get_initial()
+		initial['sender'] = self.request.user.email
+		print(initial)
+		return initial
+
+	def get_context_data(self, **kwargs):
+		data = super(SendMailView, self).get_context_data(**kwargs)
+		print(data)
+		return data
+
+	def form_valid(self, form):
+		if form.is_valid():
+			print("Valid")
+			return redirect('/')
+		subject = form.cleaned_data['subject']
+		message = form.cleaned_data['message']
+		sender = form.cleaned_data['sender']
+		recipient = ['to@example.com']
+		send_mail(subject, message, sender, ['to@example.com'], False)
+		return redirect('/')
+
+
+
+

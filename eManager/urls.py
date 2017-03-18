@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^events/(?P<pk>[0-9]+)/delete/$', views.DeleteEvent, name='DeleteEvent'),
     url(r'^events/(?P<pk>[0-9]+)/share/$', views.ShareEvent, name='ShareEvent'),
     url(r'^events/(?P<pk>[0-9]+)/change_rating/$', views.ChangeRating, name='ChangeRating'),
+    url(r'^events/(?P<pk>[0-9]+)/mail', views.SendMailView.as_view(), name='send_mail'),
 
     # Organization
     url(r'^organizations/add/$', views.OrganizationCreateView.as_view(), name='OrganizationCreateView'),

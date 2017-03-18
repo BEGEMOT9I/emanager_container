@@ -1,0 +1,27 @@
+{% extends "eManager/layout.html" %}
+
+{% block content %}
+<main class="container mail" data-controller="">
+	<section class="wrapper">
+		<form action="" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="event-edit__row">
+				<label for="id_organization">Тема письма: </label>
+				{{ form.subject}}
+				{{ form.subject.errors }}
+			</div>
+			<div class="event-edit__row">
+				<label for="id_name">Введите сообщение: </label>
+				{{ form.message }}
+				{{ form.message.errors }}
+			</div>
+			<div class="event-edit__row">
+				<label for="id_description">Ваш электронный адрес: </label>
+				{{ form.sender }}
+				{{ form.sender.errors }}
+			</div>
+			<input class="event-edit__button" type="submit" value="Отправить" />
+		</form>
+	</section>
+</main>
+{% endblock %}

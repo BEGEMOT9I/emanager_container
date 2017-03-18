@@ -105,7 +105,8 @@ class Event(models.Model):
 	image = models.ImageField(upload_to='images', blank=True, verbose_name='постер')
 	evaluation = models.FloatField(blank=False, verbose_name='Количество оценок', default=1)
 	user_list = models.CharField(max_length=1000,blank=False, verbose_name='Проголосовавшие пользователи', default='')
-
+	email = models.EmailField(verbose_name='электронная почта', max_length=255, unique=False)
+	
 	class Meta:
 		verbose_name = 'событие'
 		verbose_name_plural = 'события'

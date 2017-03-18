@@ -102,6 +102,12 @@
 				<input class="comment-add__button" type="submit" value="Отправить" />
 			</form>
 		</div>
+		<div>
+			<form class="mail-send" action="{% url 'emanager:send_mail' event.id %}" method="post">
+				{% csrf_token %}
+				<input class="mail-send__button" type="submit" value="" />
+			</form>
+		</div>
 		<div class="event__share">
 				<form class="comment-add" action="{% url 'emanager:ShareEvent' event.id %}" method="post">
 				{% csrf_token %}
