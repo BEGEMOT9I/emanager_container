@@ -127,7 +127,7 @@ def DeleteEvent(request, pk):
 class EventsListView(generic.ListView):
 	template_name = 'eManager/index.html'
 	context_object_name = 'event_list'
-	paginate_by = 3
+	paginate_by = 4
 	filter_args = {'org_id': '', 'order': 'start_date'}
 
 	def get_queryset(self):
@@ -142,8 +142,8 @@ class EventsListView(generic.ListView):
 	def get_context_data(self, **kwargs):
 		data = super(EventsListView, self).get_context_data(**kwargs)
 		data['filter_form'] = EventFilterForm()	
-		data['filter_form'].fields['org_id'].initial = self.filter_args['org_id'];
-		data['filter_form'].fields['order'].initial = self.filter_args['order'];
+		data['filter_form'].fields['org_id'].initial = self.filter_args['org_id']
+		data['filter_form'].fields['order'].initial = self.filter_args['order']
 		return data	
 
 	def post(self, request, *args, **kwargs):
@@ -152,6 +152,7 @@ class EventsListView(generic.ListView):
 		order = request.POST['order']
 		self.filter_args['org_id'] = org_id
 		self.filter_args['order'] = order
+
 		return redirect('/')
 
 def ShareEvent(request, pk):
